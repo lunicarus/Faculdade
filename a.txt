@@ -1,0 +1,6 @@
+
+lucas 21 nao superior
+sam 23 sim superior
+duda 23 nao ensino medio
+lucas 21 sim superior
+marcos 33 nao ensinoMedio

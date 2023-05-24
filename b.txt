@@ -1,0 +1,10 @@
+
+feminino 45 sim superior
+masculino 29 nao ensinomedio
+masculino 54 sim graduado
+masculino 50 sim gradu
+feminino 99 sim gradu
+feminino 25 nao gradu
+masculino 21 nao gradu
+masculino 21 nao escolar
+masculino 35 nao gradu
