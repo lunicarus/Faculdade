@@ -63,7 +63,6 @@ def relatorio_filmes(filmes, ano_lancamento):
             print(f"Ano de lançamento: {filme['Ano de lançamento']}")
             print(f"Diretor: {filme['Diretor']}")
             print(f"Atores: {', '.join(filme['Atores'])}")
-            print()
 
 # Função para exibir relatório de sessões
 def relatorio_sessoes(sessoes, data_inicial, data_final):
