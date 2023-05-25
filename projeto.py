@@ -151,7 +151,7 @@ def main():
                 relatorio_sessoes_data(sessoes, data_inicial, data_final)
 
             else:
-                print("Opção inválida.")
+                print("Opção inválida. Tente novamente.")
 
         elif opcao == "5":
             print("Saindo do programa...")
