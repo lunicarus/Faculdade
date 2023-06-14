@@ -7,15 +7,14 @@ def exibir_menu():
     print("4. Submenu Relatórios")
     print("5. Sair")
 
-# Função para exibir o submenu de salas
-def submenu_salas(salas):
-    print("Submenu de Salas:")
-    print("1. Listar todas as salas")
-    print("2. Listar uma sala específica")
-    print("3. Incluir uma sala")
-    print("4. Alterar uma sala")
-    print("5. Excluir uma sala")
-
+#region Filmes
+# Função para exibir os dados de um filme
+def exibir_dados_filme(filme):
+    print("Código:", filme["codigo"])
+    print("Nome:", filme["nome"])
+    print("Ano de Lançamento:", filme["ano_lancamento"])
+    print("Diretor:", filme["diretor"])
+    print("Atores:", ", ".join(filme["atores"]))
 
 # Função para exibir o submenu de filmes
 def submenu_filmes(filmes):
@@ -43,54 +42,34 @@ def submenu_filmes(filmes):
         else:
             print("opção invalida!")
         
-    
-
-def listar_filmes(filmes):
-    print("=== Lista de Filmes ===")
-    for codigo, filme in filmes.items():
-        print("Código:", codigo)
-        print("Nome:", filme["Nome"])
-        print("Ano de Lançamento:", filme["Ano de Lançamento"])
-        print("Diretor:", filme["Diretor"])
-        print("Atores:", ", ".join(filme["Atores"]))
-        print("-----------------------")
 
 def buscar_filme(filmes):
     codigo = input("Digite o código do filme: ")
     if codigo in filmes:
-        filme = filmes[codigo]
-        print("=== Detalhes do Filme ===")
-        print("Código:", codigo)
-        print("Nome:", filme["Nome"])
-        print("Ano de Lançamento:", filme["Ano de Lançamento"])
-        print("Diretor:", filme["Diretor"])
-        print("Atores:", ", ".join(filme["Atores"]))
-        print("-------------------------")
+        exibir_dados_filme(filmes[codigo])
     else:
         print("Filme não encontrado.")
 
 def incluir_filme(filmes):
-    codigo = input("Digite o código do filme: ")
+    codigo = int(input("Digite o código do filme: "))
     if codigo in filmes:
         print("Filme já cadastrado.")
-        return
+    else:
+        nome = input("Digite o nome do filme: ")
+        ano = int(input("Digite o ano de lançamento do filme: "))
+        diretor = input("Digite o nome do diretor do filme: ")
+        atores = input("Digite os nomes dos atores do filme (separados por vírgula): ").split(",")
 
-    nome = input("Digite o nome do filme: ")
-    ano = int(input("Digite o ano de lançamento do filme: "))
-    diretor = input("Digite o nome do diretor do filme: ")
-    atores = input("Digite os nomes dos atores do filme (separados por vírgula): ").split(",")
-
-    filmes[codigo] = {
-        "Nome": nome,
-        "Ano de Lançamento": ano,
-        "Diretor": diretor,
-        "Atores": atores
-    }
-
-    print("Filme cadastrado com sucesso.")
+        filmes[codigo] = {
+            "Nome": nome,
+            "Ano de Lançamento": ano,
+            "Diretor": diretor,
+            "Atores": atores
+        }
+        print("Filme cadastrado com sucesso.")
 
 def alterar_filme(filmes):
-    codigo = input("Digite o código do filme que deseja alterar: ")
+    codigo = int(input("Digite o código do filme que deseja alterar: "))
     if codigo in filmes:
         filme = filmes[codigo]
         print("=== Detalhes do Filme ===")
@@ -130,14 +109,35 @@ def excluir_filme(filmes):
     else:
         print("Filme não encontrado.")
 
+#endregion
+
+#region Salas
+# Função para exibir o submenu de salas
+def submenu_salas(salas):
+    print("Submenu de Salas:")
+    print("1. Listar todas as salas")
+    print("2. Listar uma sala específica")
+    print("3. Incluir uma sala")
+    print("4. Alterar uma sala")
+    print("5. Excluir uma sala")
+
+#endregion
+
+#region Sessões
 # Função para exibir o submenu de sessões
 def submenu_sessoes():
+
     print("Submenu de Sessões:")
     print("1. Listar todas as sessões")
     print("2. Listar uma sessão específica")
     print("3. Incluir uma sessão")
     print("4. Alterar uma sessão")
     print("5. Excluir uma sessão")
+
+#endregion
+
+#region Relatorios
+
 def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
         
     if relatorio_opcao == "1":
@@ -205,7 +205,7 @@ def relatorio_sessoes_data(sessoes, data_inicial, data_final):
         for sessao in sessoes_encontradas:
             exibir_dados_sessao(sessao)
             print("")
-
+#endregion
 # Função para exibir os dados de uma sala
 def exibir_dados_sala(sala):
     print("Código:", sala["codigo"])
@@ -214,13 +214,6 @@ def exibir_dados_sala(sala):
     print("Tipo de Exibição:", sala["tipo_exibicao"])
     print("Acessível:", sala["acessivel"])
 
-# Função para exibir os dados de um filme
-def exibir_dados_filme(filme):
-    print("Código:", filme["codigo"])
-    print("Nome:", filme["nome"])
-    print("Ano de Lançamento:", filme["ano_lancamento"])
-    print("Diretor:", filme["diretor"])
-    print("Atores:", ", ".join(filme["atores"]))
 
 # Função para exibir os dados de uma sessão
 def exibir_dados_sessao(sessao):
@@ -235,7 +228,7 @@ def main():
     salas = {}
     filmes = {}
     sessoes = {}
-
+    (salas,filmes,sessoes) = adicionar_dados_exemplo()
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ")
@@ -268,29 +261,29 @@ def main():
 
 def adicionar_dados_exemplo():
     salas = {
-        "101": {"Nome": "Sala Sul", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": True},
-        "102": {"Nome": "Sala Norte", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível": False},
-        "201": {"Nome": "Sala Leste", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": True},
-        "202": {"Nome": "Sala Oeste", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": True},
-        "301": {"Nome": "Sala A", "Capacidade": 150, "Tipo de Exibição": "2D", "Acessível": False},
-        "302": {"Nome": "Sala B", "Capacidade": 100, "Tipo de Exibição": "3D", "Acessível": True},
-        "401": {"Nome": "Sala C", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": True},
-        "402": {"Nome": "Sala D", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível": False},
-        "501": {"Nome": "Sala VIP", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": True},
-        "502": {"Nome": "Sala VVIP", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": True}
+        101: {"Nome": "Sala Sul", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": True},
+        102: {"Nome": "Sala Norte", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível": False},
+        201: {"Nome": "Sala Leste", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": True},
+        202: {"Nome": "Sala Oeste", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": True},
+        301: {"Nome": "Sala A", "Capacidade": 150, "Tipo de Exibição": "2D", "Acessível": False},
+        302: {"Nome": "Sala B", "Capacidade": 100, "Tipo de Exibição": "3D", "Acessível": True},
+        401: {"Nome": "Sala C", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": True},
+        402: {"Nome": "Sala D", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível": False},
+        501: {"Nome": "Sala VIP", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": True},
+        502: {"Nome": "Sala VVIP", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": True}
     }
 
     filmes = {
-        "001": {"Nome": "Tentando Ensinar: A Saga", "Ano de Lançamento": 2023, "Diretor": "__", "Atores": ["C", "Python","Aluno"]},
-        "002": {"Nome": "The Infinite Loop", "Ano de Lançamento": 2001, "Diretor": "ari aster", "Atores": ["maicao", "estagiario 015A"]},
-        "003": {"Nome": "Deadpool 7: Idoso antiheroi Imortal", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["maicao", "Carlos"]},
-        "004": {"Nome": "Vingadores 10: Mais uma ameaça chata", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Fernando", "arthur"]},
-        "005": {"Nome": "Algoritmo: A Definição", "Ano de Lançamento": 2022, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        "006": {"Nome": "Carlos", "Ano de Lançamento": 1999, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        "007": {"Nome": "Carlos II: O matador", "Ano de Lançamento": 2011, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        "008": {"Nome": "Carlos III: A vingança", "Ano de Lançamento": 1016, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        "009": {"Nome": "Carlos IV: O sucessor", "Ano de Lançamento": 2019, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        "010": {"Nome": "Carlos V: Ciborgues Mortais", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]}
+        001: {"Nome": "Tentando Ensinar: A Saga", "Ano de Lançamento": 2023, "Diretor": "__", "Atores": ["C", "Python","Aluno"]},
+        002: {"Nome": "The Infinite Loop", "Ano de Lançamento": 2001, "Diretor": "ari aster", "Atores": ["maicao", "estagiario 015A"]},
+        003: {"Nome": "Deadpool 7: Idoso antiheroi Imortal", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["maicao", "Carlos"]},
+        004: {"Nome": "Vingadores 10: Mais uma ameaça chata", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Fernando", "arthur"]},
+        005: {"Nome": "Algoritmo: A Definição", "Ano de Lançamento": 2022, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        006: {"Nome": "Carlos", "Ano de Lançamento": 1999, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        007: {"Nome": "Carlos II: O matador", "Ano de Lançamento": 2011, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        008: {"Nome": "Carlos III: A vingança", "Ano de Lançamento": 1016, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        009: {"Nome": "Carlos IV: O sucessor", "Ano de Lançamento": 2019, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        010: {"Nome": "Carlos V: Ciborgues Mortais", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]}
     }
 
     sessoes = {
@@ -308,5 +301,4 @@ def adicionar_dados_exemplo():
 
     return salas, filmes, sessoes
 
-if __name__ == "__main__":
-    main()
+main()
