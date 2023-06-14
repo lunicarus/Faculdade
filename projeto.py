@@ -274,29 +274,29 @@ def adicionar_dados_exemplo():
     }
 
     filmes = {
-        001: {"Nome": "Tentando Ensinar: A Saga", "Ano de Lançamento": 2023, "Diretor": "__", "Atores": ["C", "Python","Aluno"]},
-        002: {"Nome": "The Infinite Loop", "Ano de Lançamento": 2001, "Diretor": "ari aster", "Atores": ["maicao", "estagiario 015A"]},
-        003: {"Nome": "Deadpool 7: Idoso antiheroi Imortal", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["maicao", "Carlos"]},
-        004: {"Nome": "Vingadores 10: Mais uma ameaça chata", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Fernando", "arthur"]},
-        005: {"Nome": "Algoritmo: A Definição", "Ano de Lançamento": 2022, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        006: {"Nome": "Carlos", "Ano de Lançamento": 1999, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        007: {"Nome": "Carlos II: O matador", "Ano de Lançamento": 2011, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        008: {"Nome": "Carlos III: A vingança", "Ano de Lançamento": 1016, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        009: {"Nome": "Carlos IV: O sucessor", "Ano de Lançamento": 2019, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
-        010: {"Nome": "Carlos V: Ciborgues Mortais", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]}
+        1: {"Nome": "Tentando Ensinar: A Saga", "Ano de Lançamento": 2023, "Diretor": "__", "Atores": ["C", "Python","Aluno"]},
+        2: {"Nome": "The Infinite Loop", "Ano de Lançamento": 2001, "Diretor": "ari aster", "Atores": ["maicao", "estagiario 015A"]},
+        3: {"Nome": "Deadpool 7: Idoso antiheroi Imortal", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["maicao", "Carlos"]},
+        4: {"Nome": "Vingadores 10: Mais uma ameaça chata", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Fernando", "arthur"]},
+        5: {"Nome": "Algoritmo: A Definição", "Ano de Lançamento": 2022, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        6: {"Nome": "Carlos", "Ano de Lançamento": 1999, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        7: {"Nome": "Carlos II: O matador", "Ano de Lançamento": 2011, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        8: {"Nome": "Carlos III: A vingança", "Ano de Lançamento": 1016, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        9: {"Nome": "Carlos IV: O sucessor", "Ano de Lançamento": 2019, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]},
+        10: {"Nome": "Carlos V: Ciborgues Mortais", "Ano de Lançamento": 2023, "Diretor": "Michael Bay", "Atores": ["Paulo", "catarina"]}
     }
 
     sessoes = {
-        ("001", "101", "11/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
-        ("002", "102", "21/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
-        ("003", "201", "31/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
-        ("004", "202", "12/06/2023", "10:00"): {"Preço do Ingresso": 16.0},
-        ("005", "301", "22/06/2023", "13:00"): {"Preço do Ingresso": 22.0},
-        ("006", "302", "02/06/2023", "16:00"): {"Preço do Ingresso": 17.0},
-        ("007", "401", "09/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
-        ("008", "402", "06/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
-        ("009", "501", "15/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
-        ("010", "502", "01/06/2023", "10:00"): {"Preço do Ingresso": 16.0}
+        (1, "101", "11/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
+        (2, "102", "21/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
+        (3, "201", "31/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
+        (4, "202", "12/06/2023", "10:00"): {"Preço do Ingresso": 16.0},
+        (5, "301", "22/06/2023", "13:00"): {"Preço do Ingresso": 22.0},
+        (6, "302", "02/06/2023", "16:00"): {"Preço do Ingresso": 17.0},
+        (7, "401", "09/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
+        (8, "402", "06/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
+        (9, "501", "15/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
+        (10, "502", "01/06/2023", "10:00"): {"Preço do Ingresso": 16.0}
     }
 
     return salas, filmes, sessoes
