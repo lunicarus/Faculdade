@@ -8,13 +8,7 @@ def exibir_menu():
     print("5. Sair")
 
 #region Filmes
-# Função para exibir os dados de um filme
-def exibir_dados_filme(filme):
-    print("Código:", filme["codigo"])
-    print("Nome:", filme["nome"])
-    print("Ano de Lançamento:", filme["ano_lancamento"])
-    print("Diretor:", filme["diretor"])
-    print("Atores:", ", ".join(filme["atores"]))
+
 
 # Função para exibir o submenu de filmes
 def submenu_filmes(filmes):
@@ -26,11 +20,14 @@ def submenu_filmes(filmes):
     print("4. Alterar um filme")
     print("5. Excluir um filme")
     print("6. Sair")
-    escolhaMenuFilme = input("Escolha: ")
+    escolhaMenuFilme = 0
     while escolhaMenuFilme != '6':
+        escolhaMenuFilme = input("Escolha: ")
         if escolhaMenuFilme == '1':
             for filme in filmes:
-                exibir_dados_filme(filme)
+                print("\n")
+                print(f"Codigo: {filme}")
+                exibir_dados_filme(filmes[filme])
         elif escolhaMenuFilme == '2':
                 buscar_filme(filmes)
         elif escolhaMenuFilme == '3':
@@ -42,10 +39,19 @@ def submenu_filmes(filmes):
         else:
             print("opção invalida!")
         
+# Função para exibir os dados de um filme
+def exibir_dados_filme(filme):
+    
+    print(f"Nome: {filme['Nome']}")
+    print(f"Ano de Lançamento: {filme['Ano de Lançamento']}")
+    print(f"Diretor: {filme['Diretor']}")
+    print(f"Atores: {','.join(filme['Atores'])}")
 
 def buscar_filme(filmes):
-    codigo = input("Digite o código do filme: ")
+
+    codigo = int(input("Digite o código do filme: "))
     if codigo in filmes:
+        print(f"Código: {codigo}")
         exibir_dados_filme(filmes[codigo])
     else:
         print("Filme não encontrado.")
@@ -102,7 +108,7 @@ def alterar_filme(filmes):
         print("Filme não encontrado.")
 
 def excluir_filme(filmes):
-    codigo = input("Digite o código do filme que deseja excluir: ")
+    codigo = int(input("Digite o código do filme que deseja excluir: "))
     if codigo in filmes:
         del filmes[codigo]
         print("Filme excluído com sucesso.")
@@ -121,6 +127,14 @@ def submenu_salas(salas):
     print("4. Alterar uma sala")
     print("5. Excluir uma sala")
 
+# Função para exibir os dados de uma sala
+def exibir_dados_sala(sala):
+    print("Código:", sala["codigo"])
+    print("Nome:", sala["nome"])
+    print("Capacidade:", sala["capacidade"])
+    print("Tipo de Exibição:", sala["tipo_exibicao"])
+    print("Acessível:", sala["acessivel"])
+
 #endregion
 
 #region Sessões
@@ -133,6 +147,14 @@ def submenu_sessoes():
     print("3. Incluir uma sessão")
     print("4. Alterar uma sessão")
     print("5. Excluir uma sessão")
+
+# Função para exibir os dados de uma sessão
+def exibir_dados_sessao(sessao):
+    print("Código do Filme:", sessao["codigo_filme"])
+    print("Código da Sala:", sessao["codigo_sala"])
+    print("Data:", sessao["data"])
+    print("Horário:", sessao["horario"])
+    print("Preço do Ingresso:", sessao["preco_ingresso"])
 
 #endregion
 
@@ -206,22 +228,8 @@ def relatorio_sessoes_data(sessoes, data_inicial, data_final):
             exibir_dados_sessao(sessao)
             print("")
 #endregion
-# Função para exibir os dados de uma sala
-def exibir_dados_sala(sala):
-    print("Código:", sala["codigo"])
-    print("Nome:", sala["nome"])
-    print("Capacidade:", sala["capacidade"])
-    print("Tipo de Exibição:", sala["tipo_exibicao"])
-    print("Acessível:", sala["acessivel"])
 
 
-# Função para exibir os dados de uma sessão
-def exibir_dados_sessao(sessao):
-    print("Código do Filme:", sessao["codigo_filme"])
-    print("Código da Sala:", sessao["codigo_sala"])
-    print("Data:", sessao["data"])
-    print("Horário:", sessao["horario"])
-    print("Preço do Ingresso:", sessao["preco_ingresso"])
 
 # Função principal do programa
 def main():
@@ -287,16 +295,16 @@ def adicionar_dados_exemplo():
     }
 
     sessoes = {
-        (1, "101", "11/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
-        (2, "102", "21/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
-        (3, "201", "31/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
-        (4, "202", "12/06/2023", "10:00"): {"Preço do Ingresso": 16.0},
-        (5, "301", "22/06/2023", "13:00"): {"Preço do Ingresso": 22.0},
-        (6, "302", "02/06/2023", "16:00"): {"Preço do Ingresso": 17.0},
-        (7, "401", "09/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
-        (8, "402", "06/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
-        (9, "501", "15/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
-        (10, "502", "01/06/2023", "10:00"): {"Preço do Ingresso": 16.0}
+        (1, 101, "11/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
+        (2, 102, "21/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
+        (3, 201, "31/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
+        (4, 202, "12/06/2023", "10:00"): {"Preço do Ingresso": 16.0},
+        (5, 301, "22/06/2023", "13:00"): {"Preço do Ingresso": 22.0},
+        (6, 302, "02/06/2023", "16:00"): {"Preço do Ingresso": 17.0},
+        (7, 401, "09/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
+        (8, 402, "06/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
+        (9, 501, "15/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
+        (10,502, "01/06/2023", "10:00"): {"Preço do Ingresso": 16.0}
     }
 
     return salas, filmes, sessoes
