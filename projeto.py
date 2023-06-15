@@ -232,13 +232,14 @@ def exibir_dados_sessao(sessao):
 
 # Função principal do programa
 def main():
-    salas = {'1', '2'}
+    salas = [[1, 'nome', 45, 'blu', 'sim'], [2, 'nome2', 42, 'oi', 'nao']]#cod, nome, capacidade, tipo de exibição, acessivel
     filmes = {}
     sessoes = {}
 
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ")
+        print()
 
         if opcao == "1":
             submenu_salas()
@@ -248,7 +249,49 @@ def main():
             if op=="1": 
                 for i in salas:
                     print(i)
+            elif op=='2':
+                #o programa irá listar conforme a sala escolhida
+                print('listar uma específica')
+            
+            elif op=='3':
+                #add sala
+                print('Insira as seguintes informações: ')
+                nova_sala=[]
+                cod=int(input("Código da sala: "))
+                for sala in salas:
+                    if cod==sala[0]:
+                        print("Não é possível inserir uma sala com este mesmo código.")
+                        print()
+                    else:
+                        nova_sala.append(cod)
+                        nome=input("Nome: ")
+                        nova_sala.append(nome)
+                        capacidade=int(input("Capacidade: "))
+                        nova_sala.append(capacidade)
+                        tipo_exi=input("Tipo de exibição: ")
+                        nova_sala.append(tipo_exi)
+                        acess=input("Acessibilidade (Sim/Não): ")
+                        nova_sala.append(acess)
+                        print('Sala adicionada com sucesso!')
+                        print()
+            
+            elif op=='4':
+                #pergunta qual sala deseja mudar
+                print("Qual sala deseja alterar? ")
+                mud=input("Insira o código da sala: ")
                 
+                for i in salas:
+                    if mud==i[0]:
+                        print("Sala escolhida: ", i)
+                        print("O que deseja mudar? ")
+                        print(" 1. Nome: ")
+                        print(" 2. Capacidade: ")
+                        print(" 3. Tipo de Exibição: ")
+                        print(" 4. Acessível: ")
+                        #op=int(input('Escolha uma opção: '))
+                        print()
+                    else:
+                        print("Não exite uma sala com este código..")
             
 
         elif opcao == "2":
