@@ -208,11 +208,39 @@ def relatorio_sessoes_data(sessoes, data_inicial, data_final):
 
 # Função para exibir os dados de uma sala
 def exibir_dados_sala(sala):
-    print("Código:", sala["codigo"])
-    print("Nome:", sala["nome"])
-    print("Capacidade:", sala["capacidade"])
-    print("Tipo de Exibição:", sala["tipo_exibicao"])
-    print("Acessível:", sala["acessivel"])
+    print("Código:", sala[0])
+    print("Nome:", sala[1])
+    print("Capacidade:", sala[2])
+    print("Tipo de Exibição:", sala[3])
+    print("Acessível:", sala[4])
+
+def verifica(cod, salas):
+    for sala in salas:
+        if cod==sala[0]:
+            print('nao pode')
+            print()
+            return False
+
+def add_sala(salas):
+    print('Insira as seguintes informações: ')
+    nova_sala=[]
+    cod=int(input("Código da sala: "))
+    veri=verifica(cod, salas)
+    if veri==False:
+        return False
+    else:
+        nova_sala.append(cod)
+        nome=input("Nome: ")
+        nova_sala.append(nome)
+        capacidade=int(input("Capacidade: "))
+        nova_sala.append(capacidade)
+        tipo_exi=input("Tipo de exibição: ")
+        nova_sala.append(tipo_exi)
+        acess=input("Acessibilidade (Sim/Não): ")
+        nova_sala.append(acess)
+        salas.append(nova_sala)
+        print('Sala adicionada com sucesso!')
+        print() 
 
 # Função para exibir os dados de um filme
 def exibir_dados_filme(filme):
@@ -232,7 +260,7 @@ def exibir_dados_sessao(sessao):
 
 # Função principal do programa
 def main():
-    salas = [[1, 'nome', 45, 'blu', 'sim'], [2, 'nome2', 42, 'oi', 'nao']]#cod, nome, capacidade, tipo de exibição, acessivel
+    salas = [[1, 'Sala A', 45, '3D', 'Sim'], [2, 'Sala B', 42, '2D', 'Não']]#cod, nome, capacidade, tipo de exibição, acessivel
     filmes = {}
     sessoes = {}
 
@@ -247,33 +275,21 @@ def main():
             # Listar todas, Listar uma, Incluir, Alterar, Excluir
             op=input("Escolha uma opção: ")
             if op=="1": 
-                for i in salas:
-                    print(i)
+                for sala in salas:
+                    print()
+                    print(f"{sala[1]}:")
+                    exibir_dados_sala(sala)
+                    print()
+                    
             elif op=='2':
                 #o programa irá listar conforme a sala escolhida
                 print('listar uma específica')
             
             elif op=='3':
                 #add sala
-                print('Insira as seguintes informações: ')
-                nova_sala=[]
-                cod=int(input("Código da sala: "))
-                for sala in salas:
-                    if cod==sala[0]:
-                        print("Não é possível inserir uma sala com este mesmo código.")
-                        print()
-                    else:
-                        nova_sala.append(cod)
-                        nome=input("Nome: ")
-                        nova_sala.append(nome)
-                        capacidade=int(input("Capacidade: "))
-                        nova_sala.append(capacidade)
-                        tipo_exi=input("Tipo de exibição: ")
-                        nova_sala.append(tipo_exi)
-                        acess=input("Acessibilidade (Sim/Não): ")
-                        nova_sala.append(acess)
-                        print('Sala adicionada com sucesso!')
-                        print()
+                add_sala(salas)
+                    
+                    
             
             elif op=='4':
                 #pergunta qual sala deseja mudar
