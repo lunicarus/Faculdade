@@ -8,7 +8,7 @@ def exibir_menu():
     print("5. Sair")
 
 # Função para exibir o submenu de salas
-def submenu_salas(salas):
+def submenu_salas():
     print("Submenu de Salas:")
     print("1. Listar todas as salas")
     print("2. Listar uma sala específica")
@@ -232,7 +232,7 @@ def exibir_dados_sessao(sessao):
 
 # Função principal do programa
 def main():
-    salas = {}
+    salas = {'1', '2'}
     filmes = {}
     sessoes = {}
 
@@ -241,9 +241,15 @@ def main():
         opcao = input("Escolha uma opção: ")
 
         if opcao == "1":
-            submenu_salas(salas)
+            submenu_salas()
             # Implemente as operações do submenu de salas
             # Listar todas, Listar uma, Incluir, Alterar, Excluir
+            op=input("Escolha uma opção: ")
+            if op=="1": 
+                for i in salas:
+                    print(i)
+                
+            
 
         elif opcao == "2":
             submenu_filmes(filmes)
