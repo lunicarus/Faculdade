@@ -379,8 +379,8 @@ def main():
                     print()
                     
             elif op=='2':
-                c=input("Insira o código da sala: ")
-                verifica4(c, salas)
+                cod=int(input("Insira o código da sala: "))
+                verifica4(cod, salas)
             
             elif op=='3':
                 add_sala(salas)              
