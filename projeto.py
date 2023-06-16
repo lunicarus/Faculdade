@@ -236,7 +236,49 @@ def verifica2(mud, salas):
             return False          
     if ver!=True:
         print("Sala não encontrada, tente novamente")
-    
+        print()
+ 
+def verifica3(ex, salas):
+    ver=False
+    for sala in salas:
+        if ex==sala[0]:
+            print()
+            print("Sala encontrada!")
+            print()
+            a=salas.index(sala)
+            excluir(sala, salas, a)
+            ver=True
+            return False
+    if ver!=True:
+        print("Sala não encontrada, tente novamente")
+        print()
+
+def verifica4(cod, salas):
+    ver=False
+    for sala in salas:
+        if cod==sala[0]:
+            print()
+            print("Sala encontrada!")
+            exibir_dados_sala(sala)
+            print()
+            ver=True
+            return False
+    if ver!=True:
+        print("Sala não encontrada..")
+        
+        
+def excluir(sala, salas, a):
+    print("Sala escolhida: ", sala[1])
+    excluir=input("Deletar sala? (S/N)").upper()
+    if excluir=='S':
+        del salas[a]
+    elif excluir=='N':
+        print("Cancelando..")
+        return False
+    else:
+        print("Opção inválida! Tente novamente")
+        
+        
 
 def altera(sala):
     print(f'Sala escolhida: {sala[1]}')
@@ -294,8 +336,7 @@ def add_sala(salas):
         salas.append(nova_sala)
         print('Sala adicionada com sucesso!')
         print() 
-
-
+    
 
 # Função para exibir os dados de um filme
 def exibir_dados_filme(filme):
@@ -338,8 +379,8 @@ def main():
                     print()
                     
             elif op=='2':
-                #o programa irá listar conforme a sala escolhida
-                print('listar uma específica')
+                c=input("Insira o código da sala: ")
+                verifica4(c, salas)
             
             elif op=='3':
                 add_sala(salas)              
@@ -348,7 +389,12 @@ def main():
                 #pergunta qual sala deseja mudar
                 print("Qual sala deseja alterar? ")
                 mud=int(input(" Insira o código da sala: "))
-                verifica2(mud, salas)           
+                verifica2(mud, salas)  
+            
+            elif op=='5':
+                print("Qual sala deseja excluir?")
+                ex=int(input(" Insira o código da sala: "))   
+                verifica3(ex, salas)
 
         elif opcao == "2":
             submenu_filmes(filmes)
