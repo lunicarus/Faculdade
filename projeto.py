@@ -5,21 +5,13 @@ def exibir_menu():
     print("3. Submenu de Sessões")
     print("4. Submenu Relatórios")
     print("5. Sair")
-    
+
 #region Filmes
 
 def submenu_filmes(filmes):
 
-    print("Submenu de Filmes:")
-    print("1. Listar todos os filmes")
-    print("2. Listar um filme específico")
-    print("3. Incluir um filme")
-    print("4. Alterar um filme")
-    print("5. Excluir um filme")
-    print("6. Sair")
     escolhaMenuFilme = 0
     while escolhaMenuFilme != '6':
-        print("\n")
         print("Submenu de Filmes:")
         print("1. Listar todos os filmes")
         print("2. Listar um filme específico")
@@ -29,10 +21,11 @@ def submenu_filmes(filmes):
         print("6. Sair")
         print("\n")
         escolhaMenuFilme = input("")
-        print("\n")
         if escolhaMenuFilme == '1':
             for filme in filmes:
                 print("\n")
+                print("-------------------------")
+                print("Codigo: ",filme)
                 exibir_dados_filme(filmes[filme])
         elif escolhaMenuFilme == '2':
                 exibir_dados_filme(buscar_filme(filmes))
@@ -53,8 +46,6 @@ def submenu_filmes(filmes):
             print("\n")
         
 def exibir_dados_filme(filme):
-        print("-------------------------")
-        print("Codigo: ",filme)
         print("Nome:", filme["Nome"])
         print("Ano de Lançamento:", filme["Ano de Lançamento"])
         print("Diretor:", filme["Diretor"])
@@ -64,6 +55,8 @@ def exibir_dados_filme(filme):
 def buscar_filme(filmes):
     codigo = int(input("Digite o código do filme: "))
     if codigo in filmes:
+        print("-------------------------")
+        print("Codigo: ",codigo)
         filme = filmes[codigo]
         return filme
     else:
@@ -124,6 +117,141 @@ def excluir_filme(filmes):
         print("Filme não encontrado.")
 
 #endregion
+
+
+# region Salas
+
+def submenu_salas(salas):
+    escolhaMenuSala = '0'
+    while escolhaMenuSala != '6':
+        print("Submenu de Salas:")
+        print("1. Listar todas as salas")
+        print("2. Listar uma sala específico")
+        print("3. Incluir uma sala")
+        print("4. Alterar uma sala")
+        print("5. Excluir uma sala")
+        print("6. Sair")
+        escolhaMenuSala = input()
+        print("\n")
+        if escolhaMenuSala == '1':
+            for sala in salas:
+                print("\n")
+                print("-------------------------")
+                print("Codigo: ",sala)
+                exibir_dados_sala(salas[sala])
+        elif escolhaMenuSala == '2':
+            buscar_sala(salas)
+            print("\n")
+        elif escolhaMenuSala == '3':
+            incluir_sala(salas)
+            print("\n")
+        elif escolhaMenuSala == '4':
+            alterar_sala(salas)
+            print("\n")
+        elif escolhaMenuSala == '5':
+            excluir_sala(salas)
+            print("\n")
+        elif escolhaMenuSala == '6':
+            print("saindo do submenu salas...")
+        else :
+            print("opção invalida!")
+            print("\n")
+        
+def exibir_dados_sala(sala):
+    print(f"Nome: {sala['Nome']}")
+    print(f"Capacidade: {sala['Capacidade']}")
+    print(f"Tipo de Exibição: {sala['Tipo de Exibição']}")
+    print(f"Acessível: {sala['Acessível']}")
+    print("-------------------------")
+
+def buscar_sala(salas):
+    codigo = int(input("Digite o código da sala: "))
+    if codigo in salas:
+        sala = salas[codigo]
+        print("-------------------------")
+        print("Codigo: ",codigo)
+        exibir_dados_sala(sala)
+    else:
+        print("Sala não encontrada.")
+
+def incluir_sala(salas):
+    codigo = int(input("Digite o código da sala: "))
+    if codigo in salas:
+        print("Sala já cadastrada.")
+    else:
+        nome = input("Digite o nome da sala: ")
+
+        Capacidade = int(input("Digite a capacidade: "))
+        while Capacidade < 0 or Capacidade > 1000:
+            print(" valor invalido! ")
+            Capacidade = int(input("Digite a capacidade: "))
+
+        TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
+        while TipoExibicao != "2D" and TipoExibicao != "3D":
+            print(" valor invalido! ")
+            TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
+
+        acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ")
+        while acessivel != 'S' and acessivel != 'N':
+            print(" valor invalido! ")
+            acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ")
+        if acessivel == 'S':
+            acessivel = 'Sim'
+        else:
+            acessivel = 'Não'
+        
+        salas[codigo] = {
+            "Nome": nome,
+            "Capacidade": Capacidade,
+            "Tipo de Exibição": TipoExibicao,
+            "Acessível": acessivel
+        }
+        print("sala cadastrada com sucesso.")
+
+def alterar_sala(salas):
+    codigo = int(input("Digite o código da sala que deseja alterar: "))
+    if codigo in salas:
+        sala = salas[codigo]
+        exibir_dados_sala(sala)
+
+        nome = input("Digite o novo nome da sala (ou deixe em branco para manter o mesmo): ")
+        if nome:
+            sala["Nome"] = nome
+
+        capacidade = input("Digite a nova capacidade (ou deixe em branco para manter o mesmo): ")
+        if capacidade:
+            capacidade = int(capacidade)
+            if capacidade > 0 and capacidade < 1000:
+                sala["Capacidade"] = capacidade 
+        
+        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ")
+        if TipoExibição:
+            if TipoExibição == '2D' or TipoExibição ==  '3D':
+                sala["Tipo de Exibição"] = TipoExibição
+
+        acessivel = input("Digite o novo estado de acessibilidade (ou deixe em branco para manter o mesmo): ")
+        if acessivel:
+            if acessivel == 'S':
+                acessivel = 'Sim'
+                sala["Capacidade"] = acessivel
+            elif acessivel == 'N':
+                acessivel = 'Não'
+                sala["Capacidade"] = acessivel
+
+        print("sala alterada com sucesso.")
+    else:
+        print("sala não encontrada.")
+
+def excluir_sala(salas):
+    codigo = int(input("Digite o código da sala que deseja excluir: "))
+    if codigo in salas:
+        del salas[codigo]
+        print("sala excluída com sucesso.")
+    else:
+        print("sala não encontrada.")
+
+#endregion
+
 
 #region Sessões
 
@@ -212,137 +340,6 @@ def relatorio_sessoes_data(sessoes, data_inicial, data_final):
         for sessao in sessoes_encontradas:
             exibir_dados_sessao(sessao)
             print("")
-#endregion
-
-# region Salas
-
-def submenu_salas(salas):
-    escolhaMenuSala = '0'
-    while escolhaMenuSala != '6':
-        print("Submenu de Salas:")
-        print("1. Listar todas as salas")
-        print("2. Listar uma sala específico")
-        print("3. Incluir uma sala")
-        print("4. Alterar uma sala")
-        print("5. Excluir uma sala")
-        print("6. Sair")
-        escolhaMenuSala = input()
-        print("\n")
-        if escolhaMenuSala == '1':
-            for sala in salas:
-                print("\n")
-                print(f"Codigo: {sala}")
-                exibir_dados_sala(salas[sala])
-        elif escolhaMenuSala == '2':
-            buscar_sala(salas)
-            print("\n")
-        elif escolhaMenuSala == '3':
-            incluir_sala(salas)
-            print("\n")
-        elif escolhaMenuSala == '4':
-            alterar_sala(salas)
-            print("\n")
-        elif escolhaMenuSala == '5':
-            excluir_sala(salas)
-            print("\n")
-        elif escolhaMenuSala == '6':
-            print("saindo do submenu filmes...")
-        else :
-            print("opção invalida!")
-            print("\n")
-        
-def exibir_dados_sala(sala):
-    print("-------------------------")
-    print(f"Nome: {sala['Nome']}")
-    print(f"Capacidade: {sala['Capacidade']}")
-    print(f"Tipo de Exibição: {sala['Tipo de Exibição']}")
-    print(f"Acessível: {sala['Acessível']}")
-    print("-------------------------")
-
-def buscar_sala(salas):
-    codigo = int(input("Digite o código da sala: "))
-    if codigo in salas:
-        sala = salas[codigo]
-        exibir_dados_sala(sala)
-    else:
-        print("Sala não encontrada.")
-
-def incluir_sala(salas):
-    codigo = int(input("Digite o código da sala: "))
-    if codigo in salas:
-        print("Sala já cadastrada.")
-    else:
-        nome = input("Digite o nome da sala: ")
-
-        Capacidade = int(input("Digite a capacidade: "))
-        while Capacidade < 0 or Capacidade > 1000:
-            print(" valor invalido! ")
-            Capacidade = int(input("Digite a capacidade: "))
-
-        TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
-        while TipoExibicao != "2D" and TipoExibicao != "3D":
-            print(" valor invalido! ")
-            TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
-
-        acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ")
-        while acessivel != 'S' and acessivel != 'N':
-            print(" valor invalido! ")
-            acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ")
-        if acessivel == 'S':
-            acessivel = 'Sim'
-        else:
-            acessivel = 'Não'
-        
-        salas[codigo] = {
-            "Nome": nome,
-            "Capacidade": Capacidade,
-            "Tipo de Exibição": TipoExibicao,
-            "Acessível": acessivel
-        }
-        print("sala cadastrada com sucesso.")
-
-def alterar_sala(salas):
-    codigo = int(input("Digite o código da sala que deseja alterar: "))
-    if codigo in salas:
-        sala = salas[codigo]
-        exibir_dados_sala(sala)
-
-        nome = input("Digite o novo nome da sala (ou deixe em branco para manter o mesmo): ")
-        if nome:
-            sala["Nome"] = nome
-
-        capacidade = input("Digite a nova capacidade (ou deixe em branco para manter o mesmo): ")
-        if capacidade:
-            capacidade = int(capacidade)
-            if capacidade > 0 and capacidade < 1000:
-                sala["Capacidade"] = capacidade 
-        
-        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ")
-        if TipoExibição:
-            if TipoExibição == '2D' or TipoExibição ==  '3D':
-                sala["Tipo de Exibição"] = TipoExibição
-
-        acessivel = input("Digite o novo estado de acessibilidade (ou deixe em branco para manter o mesmo): ")
-        if acessivel:
-            if acessivel == 'S':
-                acessivel = 'Sim'
-                sala["Capacidade"] = acessivel
-            elif acessivel == 'N':
-                acessivel = 'Não'
-                sala["Capacidade"] = acessivel
-
-        print("sala alterada com sucesso.")
-    else:
-        print("sala não encontrada.")
-
-def excluir_sala(salas):
-    codigo = int(input("Digite o código da sala que deseja excluir: "))
-    if codigo in salas:
-        del salas[codigo]
-        print("sala excluída com sucesso.")
-    else:
-        print("sala não encontrada.")
-
 #endregion
 
 def main():
