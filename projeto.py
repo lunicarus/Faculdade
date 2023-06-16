@@ -217,7 +217,49 @@ def exibir_dados_sala(sala):
 def verifica(cod, salas):
     for sala in salas:
         if cod==sala[0]:
-            print('nao pode')
+            print()
+            print('* Não é possível adicionar uma sala com este código, tente novamente! *')
+            print()
+            return False
+
+def verifica2(mud, salas):
+    for sala in salas:
+        if mud==sala[0]:
+            print()
+            print('Sala encontrada!')
+            print()
+            #fazer a alteração aqui mesmo
+            print(f'Sala escolhida: {sala[1]}')
+            print("O que de seja mudar?")
+            print(" 1. Nome: ", sala[1])
+            print(" 2. Capacidade: ", sala[2])
+            print(" 3. Tipo de exibição: ", sala[3])
+            print(" 4. Acessível: ", sala[4])
+            op=int(input("Escolha uma opção: "))
+            
+            if op == 1:
+                nv_nome=input("Insira o novo nome da sala: ")
+                sala[1]=nv_nome
+                print("Nome da sala alterado com sucesso!")
+            elif op==2:
+                nv_capacidade=int(input("Insira a nova capacidade: "))
+                sala[2]=nv_capacidade
+                print("Capacidade da sala alterado com sucesso!")
+            elif op==3:
+                nv_exibicao=input("Insira a nova capacidade: ")
+                sala[3]=nv_exibicao
+                print("Tipo de exibição da sala alterado com sucesso!")
+            elif op==4:
+                nv_acess=input("Insira a nova acessibilidade (Sim/Não): ")
+                sala[4]=nv_acess
+                print("Acessibilidade da sala alterada com sucesso!")
+            else:
+                print("Opção inválida, tente novamente..")
+            return False           
+            
+        else:
+            print()
+            print("Não existe uma sala com este código, tente novamente..")
             print()
             return False
 
@@ -241,6 +283,8 @@ def add_sala(salas):
         salas.append(nova_sala)
         print('Sala adicionada com sucesso!')
         print() 
+
+
 
 # Função para exibir os dados de um filme
 def exibir_dados_filme(filme):
@@ -274,6 +318,7 @@ def main():
             # Implemente as operações do submenu de salas
             # Listar todas, Listar uma, Incluir, Alterar, Excluir
             op=input("Escolha uma opção: ")
+            print()
             if op=="1": 
                 for sala in salas:
                     print()
@@ -286,28 +331,15 @@ def main():
                 print('listar uma específica')
             
             elif op=='3':
-                #add sala
-                add_sala(salas)
-                    
-                    
+                add_sala(salas)              
             
             elif op=='4':
                 #pergunta qual sala deseja mudar
                 print("Qual sala deseja alterar? ")
-                mud=input("Insira o código da sala: ")
+                mud=int(input(" Insira o código da sala: "))
+                verifica2(mud, salas)
+                #chamar uma função para procurar a sala
                 
-                for i in salas:
-                    if mud==i[0]:
-                        print("Sala escolhida: ", i)
-                        print("O que deseja mudar? ")
-                        print(" 1. Nome: ")
-                        print(" 2. Capacidade: ")
-                        print(" 3. Tipo de Exibição: ")
-                        print(" 4. Acessível: ")
-                        #op=int(input('Escolha uma opção: '))
-                        print()
-                    else:
-                        print("Não exite uma sala com este código..")
             
 
         elif opcao == "2":
