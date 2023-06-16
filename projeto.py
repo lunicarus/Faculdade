@@ -227,22 +227,22 @@ def submenu_salas(salas):
     print("4. Alterar um sala")
     print("5. Excluir um sala")
     print("6. Sair")
-    escolhaMenuFilme = 0
-    while escolhaMenuFilme != '6':
-        escolhaMenuFilme = input("Escolha: ")
-        if escolhaMenuFilme == '1':
+    escolhaMenuSala = 0
+    while escolhaMenuSala != '6':
+        escolhaMenuSala = input("Escolha: ")
+        if escolhaMenuSala == '1':
             for sala in salas:
                 print("\n")
                 print(f"Codigo: {sala}")
                 exibir_dados_sala(salas[sala])
-        elif escolhaMenuFilme == '2':
+        elif escolhaMenuSala == '2':
                 buscar_sala(salas)
-        elif escolhaMenuFilme == '3':
-                incluir_filme(salas)
-        elif escolhaMenuFilme == '4':
-            alterar_filme(salas)
-        elif escolhaMenuFilme == '5':
-            excluir_filme(salas)
+        elif escolhaMenuSala == '3':
+                incluir_sala(salas)
+        elif escolhaMenuSala == '4':
+            alterar_sala(salas)
+        elif escolhaMenuSala == '5':
+            excluir_sala(salas)
         else:
             print("opção invalida!")
         
