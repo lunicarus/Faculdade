@@ -272,6 +272,9 @@ def excluir(sala, salas, a):
     excluir=input("Deletar sala? (S/N)").upper()
     if excluir=='S':
         del salas[a]
+        print()
+        print("Sala deletada com sucesso!")
+        print()
     elif excluir=='N':
         print("Cancelando..")
         return False
