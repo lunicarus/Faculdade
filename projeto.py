@@ -223,45 +223,56 @@ def verifica(cod, salas):
             return False
 
 def verifica2(mud, salas):
+    ver=False
     for sala in salas:
         if mud==sala[0]:
             print()
             print('Sala encontrada!')
             print()
-            #fazer a alteração aqui mesmo
-            print(f'Sala escolhida: {sala[1]}')
-            print("O que de seja mudar?")
-            print(" 1. Nome: ", sala[1])
-            print(" 2. Capacidade: ", sala[2])
-            print(" 3. Tipo de exibição: ", sala[3])
-            print(" 4. Acessível: ", sala[4])
-            op=int(input("Escolha uma opção: "))
             
-            if op == 1:
-                nv_nome=input("Insira o novo nome da sala: ")
-                sala[1]=nv_nome
-                print("Nome da sala alterado com sucesso!")
-            elif op==2:
-                nv_capacidade=int(input("Insira a nova capacidade: "))
-                sala[2]=nv_capacidade
-                print("Capacidade da sala alterado com sucesso!")
-            elif op==3:
-                nv_exibicao=input("Insira a nova capacidade: ")
-                sala[3]=nv_exibicao
-                print("Tipo de exibição da sala alterado com sucesso!")
-            elif op==4:
-                nv_acess=input("Insira a nova acessibilidade (Sim/Não): ")
-                sala[4]=nv_acess
-                print("Acessibilidade da sala alterada com sucesso!")
-            else:
-                print("Opção inválida, tente novamente..")
-            return False           
-            
-        else:
+            altera(sala)
             print()
-            print("Não existe uma sala com este código, tente novamente..")
-            print()
-            return False
+            ver=True
+            return False          
+    if ver!=True:
+        print("Sala não encontrada, tente novamente")
+    
+
+def altera(sala):
+    print(f'Sala escolhida: {sala[1]}')
+    print("O que de seja mudar?")
+    print(" 1. Nome: ", sala[1])
+    print(" 2. Capacidade: ", sala[2])
+    print(" 3. Tipo de exibição: ", sala[3])
+    print(" 4. Acessível: ", sala[4])
+    print(" 5. Cancelar")
+    
+    op=int(input("Escolha uma opção: "))        
+    if op == 1:
+        nv_nome=input("Insira o novo nome da sala: ")
+        sala[1]=nv_nome
+        print()
+        print("Nome da sala alterado com sucesso!")
+    elif op==2:
+        nv_capacidade=int(input("Insira a nova capacidade: "))
+        sala[2]=nv_capacidade
+        print()
+        print("Capacidade da sala alterado com sucesso!")
+    elif op==3:
+        nv_exibicao=input("Insira a nova capacidade: ")
+        sala[3]=nv_exibicao
+        print()
+        print("Tipo de exibição da sala alterado com sucesso!")
+    elif op==4:
+        nv_acess=input("Insira a nova acessibilidade (Sim/Não): ")
+        sala[4]=nv_acess
+        print()
+        print("Acessibilidade da sala alterada com sucesso!")
+    elif op==5:
+        print()
+        print("Operação cancelada!")
+    else:
+        print("Opção inválida, tente novamente..")
 
 def add_sala(salas):
     print('Insira as seguintes informações: ')
@@ -337,10 +348,7 @@ def main():
                 #pergunta qual sala deseja mudar
                 print("Qual sala deseja alterar? ")
                 mud=int(input(" Insira o código da sala: "))
-                verifica2(mud, salas)
-                #chamar uma função para procurar a sala
-                
-            
+                verifica2(mud, salas)           
 
         elif opcao == "2":
             submenu_filmes(filmes)
