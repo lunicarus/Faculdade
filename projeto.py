@@ -233,18 +233,45 @@ def relatorio_sessoes_data(sessoes, data_inicial, data_final):
 
 # Função principal do programa
 def main():
-    salas = {}
+    salas = [[1, 'Sala A', 45, '3D', 'Sim'], [2, 'Sala B', 42, '2D', 'Não']]#cod, nome, capacidade, tipo de exibição, acessivel
     filmes = {}
     sessoes = {}
     (salas,filmes,sessoes) = adicionar_dados_exemplo()
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ")
+        print()
 
         if opcao == "1":
-            submenu_salas(salas)
+            submenu_salas()
             # Implemente as operações do submenu de salas
             # Listar todas, Listar uma, Incluir, Alterar, Excluir
+            op=input("Escolha uma opção: ")
+            print()
+            if op=="1": 
+                for sala in salas:
+                    print()
+                    print(f"{sala[1]}:")
+                    exibir_dados_sala(sala)
+                    print()
+                    
+            elif op=='2':
+                cod=int(input("Insira o código da sala: "))
+                verifica4(cod, salas)
+            
+            elif op=='3':
+                add_sala(salas)              
+            
+            elif op=='4':
+                #pergunta qual sala deseja mudar
+                print("Qual sala deseja alterar? ")
+                mud=int(input(" Insira o código da sala: "))
+                verifica2(mud, salas)  
+            
+            elif op=='5':
+                print("Qual sala deseja excluir?")
+                ex=int(input(" Insira o código da sala: "))   
+                verifica3(ex, salas)
 
         elif opcao == "2":
             submenu_filmes(filmes)
