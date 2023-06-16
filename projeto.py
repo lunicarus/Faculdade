@@ -48,11 +48,16 @@ def exibir_dados_filme(filme):
     print(f"Atores: {','.join(filme['Atores'])}")
 
 def buscar_filme(filmes):
-
-    codigo = int(input("Digite o código do filme: "))
+    codigo = input("Digite o código do filme: ")
     if codigo in filmes:
-        print(f"Código: {codigo}")
-        exibir_dados_filme(filmes[codigo])
+        filme = filmes[codigo]
+        print("=== Detalhes do Filme ===")
+        print("Código:", codigo)
+        print("Nome:", filme["Nome"])
+        print("Ano de Lançamento:", filme["Ano de Lançamento"])
+        print("Diretor:", filme["Diretor"])
+        print("Atores:", ", ".join(filme["Atores"]))
+        print("-------------------------")
     else:
         print("Filme não encontrado.")
 
@@ -115,25 +120,7 @@ def excluir_filme(filmes):
     else:
         print("Filme não encontrado.")
 
-#endregion
-
-#region Salas
-# Função para exibir o submenu de salas
-def submenu_salas(salas):
-    print("Submenu de Salas:")
-    print("1. Listar todas as salas")
-    print("2. Listar uma sala específica")
-    print("3. Incluir uma sala")
-    print("4. Alterar uma sala")
-    print("5. Excluir uma sala")
-
 # Função para exibir os dados de uma sala
-def exibir_dados_sala(sala):
-    print("Código:", sala["codigo"])
-    print("Nome:", sala["nome"])
-    print("Capacidade:", sala["capacidade"])
-    print("Tipo de Exibição:", sala["tipo_exibicao"])
-    print("Acessível:", sala["acessivel"])
 
 #endregion
 
@@ -229,49 +216,147 @@ def relatorio_sessoes_data(sessoes, data_inicial, data_final):
             print("")
 #endregion
 
+# region Salas
+
+def submenu_salas(salas):
+
+    print("Submenu de Salas:")
+    print("1. Listar todos as salas")
+    print("2. Listar um filme específico")
+    print("3. Incluir um sala")
+    print("4. Alterar um sala")
+    print("5. Excluir um sala")
+    print("6. Sair")
+    escolhaMenuFilme = 0
+    while escolhaMenuFilme != '6':
+        escolhaMenuFilme = input("Escolha: ")
+        if escolhaMenuFilme == '1':
+            for sala in salas:
+                print("\n")
+                print(f"Codigo: {sala}")
+                exibir_dados_sala(salas[sala])
+        elif escolhaMenuFilme == '2':
+                buscar_sala(salas)
+        elif escolhaMenuFilme == '3':
+                incluir_filme(salas)
+        elif escolhaMenuFilme == '4':
+            alterar_filme(salas)
+        elif escolhaMenuFilme == '5':
+            excluir_filme(salas)
+        else:
+            print("opção invalida!")
+        
+# Função para exibir os dados de um filme
+def exibir_dados_sala(sala):
+    
+    print(f"Nome: {sala['Nome']}")
+    print(f"Capacidade: {sala['Capacidade']}")
+    print(f"Tipo de Exibição: {sala['Tipo de Exibição']}")
+    print(f"Acessível: {sala['Acessível']}")
+
+def buscar_sala(salas):
+    codigo = input("Digite o código da sala: ")
+    if codigo in salas:
+        sala = salas[codigo]
+        print(f"Nome: {sala['Nome']}")
+        print(f"Capacidade: {sala['Capacidade']}")
+        print(f"Tipo de Exibição: {sala['Tipo de Exibição']}")
+        print(f"Acessível: {sala['Acessível']}")
+        print("-------------------------")
+    else:
+        print("Filme não encontrado.")
+
+def incluir_sala(salas):
+    codigo = int(input("Digite o código da sala: "))
+    if codigo in salas:
+        print("Filme já cadastrado.")
+    else:
+        nome = input("Digite o nome da sala: ")
+
+        Capacidade = int(input("Digite a capacidade: "))
+        while Capacidade < 0 or Capacidade > 1000:
+            print(" valor invalido! ")
+            Capacidade = int(input("Digite a capacidade: "))
+
+        TipoExibição = input("Digite o tipo de Exibição (2D / 3D): ")
+        while TipoExibição != '2D' or TipoExibição != '3D':
+            print(" valor invalido! ")
+            TipoExibição = input("Digite o tipo de Exibição (2D / 3D): ")
+
+        acessivel = input(f"{'digite "S" para acessivel e "N" para nao acessivel:' }")
+        while acessivel != 'S' or acessivel != 'N':
+            print(" valor invalido! ")
+            acessivel = input(f"{'digite "S" para acessivel e "N" para nao acessivel:' }")
+        if acessivel == 'S':
+            acessivel = 'Sim'
+        else:
+            acessivel == 'Não'
+        
+        salas[codigo] = {
+            "Nome": nome,
+            "Capacidade": Capacidade,
+            "Tipo de Exibição": TipoExibição,
+            "acessivel": acessivel
+        }
+        print("sala cadastrada com sucesso.")
+
+def alterar_sala(salas):
+    codigo = int(input("Digite o código da sala que deseja alterar: "))
+    if codigo in salas:
+        sala = salas[codigo]
+        exibir_dados_sala(sala)
+
+        nome = input("Digite o novo nome da sala (ou deixe em branco para manter o mesmo): ")
+        if nome:
+            sala["Nome"] = nome
+
+        capacidade = input("Digite a nova capacidade (ou deixe em branco para manter o mesmo): ")
+        if capacidade:
+            sala["Tipo de Exibição"] = int(capacidade) 
+        
+        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ")
+        if TipoExibição:
+            sala["Capacidade"] = TipoExibição
+
+        acessivel = input("Digite o novo estado de acessibilidade (S/N): ")
+        while acessivel != 'S' or acessivel !='N':
+            print("opção invalida")
+            acessivel = input("Digite o novo estado de acessibilidade (S/N): ")
+
+        acessivel = (acessivel == 'S')
+        sala["acessivel"] = acessivel
+
+        print("sala alterada com sucesso.")
+    else:
+        print("sala não encontrada.")
+
+def excluir_sala(salas):
+    codigo = int(input("Digite o código da sala que deseja excluir: "))
+    if codigo in salas:
+        del salas[codigo]
+        print("sala excluída com sucesso.")
+    else:
+        print("sala não encontrada.")
+
+#endregion
+
+
 
 
 # Função principal do programa
 def main():
-    salas = [[1, 'Sala A', 45, '3D', 'Sim'], [2, 'Sala B', 42, '2D', 'Não']]#cod, nome, capacidade, tipo de exibição, acessivel
+    salas = {}
     filmes = {}
     sessoes = {}
     (salas,filmes,sessoes) = adicionar_dados_exemplo()
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ")
-        print()
 
         if opcao == "1":
-            submenu_salas()
+            submenu_salas(salas)
             # Implemente as operações do submenu de salas
             # Listar todas, Listar uma, Incluir, Alterar, Excluir
-            op=input("Escolha uma opção: ")
-            print()
-            if op=="1": 
-                for sala in salas:
-                    print()
-                    print(f"{sala[1]}:")
-                    exibir_dados_sala(sala)
-                    print()
-                    
-            elif op=='2':
-                cod=int(input("Insira o código da sala: "))
-                verifica4(cod, salas)
-            
-            elif op=='3':
-                add_sala(salas)              
-            
-            elif op=='4':
-                #pergunta qual sala deseja mudar
-                print("Qual sala deseja alterar? ")
-                mud=int(input(" Insira o código da sala: "))
-                verifica2(mud, salas)  
-            
-            elif op=='5':
-                print("Qual sala deseja excluir?")
-                ex=int(input(" Insira o código da sala: "))   
-                verifica3(ex, salas)
 
         elif opcao == "2":
             submenu_filmes(filmes)
@@ -296,16 +381,16 @@ def main():
 
 def adicionar_dados_exemplo():
     salas = {
-        101: {"Nome": "Sala Sul", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": True},
-        102: {"Nome": "Sala Norte", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível": False},
-        201: {"Nome": "Sala Leste", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": True},
-        202: {"Nome": "Sala Oeste", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": True},
-        301: {"Nome": "Sala A", "Capacidade": 150, "Tipo de Exibição": "2D", "Acessível": False},
-        302: {"Nome": "Sala B", "Capacidade": 100, "Tipo de Exibição": "3D", "Acessível": True},
-        401: {"Nome": "Sala C", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": True},
-        402: {"Nome": "Sala D", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível": False},
-        501: {"Nome": "Sala VIP", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": True},
-        502: {"Nome": "Sala VVIP", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": True}
+        101: {"Nome": "Sala Sul", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": 'Sim'},
+        102: {"Nome": "Sala Norte", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível": 'Não'},
+        201: {"Nome": "Sala Leste", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": 'Sim'},
+        202: {"Nome": "Sala Oeste", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": 'Sim'},
+        301: {"Nome": "Sala A", "Capacidade": 150, "Tipo de Exibição": "2D", "Acessível": 'Não'},
+        302: {"Nome": "Sala B", "Capacidade": 100, "Tipo de Exibição": "3D", "Acessível": 'Sim'},
+        401: {"Nome": "Sala C", "Capacidade": 100, "Tipo de Exibição": "2D", "Acessível": 'Sim'},
+        402: {"Nome": "Sala D", "Capacidade": 80, "Tipo de Exibição": "3D", "Acessível":'Não'},
+        501: {"Nome": "Sala VIP", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": 'Sim'},
+        502: {"Nome": "Sala VVIP", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": 'Sim'}
     }
 
     filmes = {
