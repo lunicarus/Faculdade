@@ -10,7 +10,7 @@ def exibir_menu():
 
 #region Filmes
 
-def submenu_filmes(filmes):
+def submenu_filmes(filmes,sessoes):
 
     escolhaMenuFilme = 0
     while escolhaMenuFilme != '6':
@@ -39,7 +39,7 @@ def submenu_filmes(filmes):
             alterar_filme(filmes)
             print("\n")
         elif escolhaMenuFilme == '5':
-            excluir_filme(filmes)
+            excluir_filme(filmes,sessoes)
             print("\n")
         elif escolhaMenuFilme == '6':
             print("saindo do menu filmes...")
@@ -109,21 +109,26 @@ def alterar_filme(filmes):
     else:
         print("Filme não encontrado.")
 
-def excluir_filme(filmes):
+def excluir_filme(filmes,sessoes):
     codigo = int(input("Digite o código do filme que deseja excluir: "))
     if codigo in filmes:
-
+        for sessao in sessoes:
+            if sessao[0] == codigo:
+                print("não é possivel excluir filme pois o mesmo faz parte de uma sessão")
+                return
+            else:
+                continue
         del filmes[codigo]
         print("Filme excluído com sucesso.")
     else:
-        print("Filme não encontrado.")
+            print("Filme não encontrado.")
 
 #endregion
 
 
 # region Salas
 
-def submenu_salas(salas):
+def submenu_salas(salas,sessoes):
     escolhaMenuSala = '0'
     while escolhaMenuSala != '6':
         print("Submenu de Salas:")
@@ -151,7 +156,7 @@ def submenu_salas(salas):
             alterar_sala(salas)
             print("\n")
         elif escolhaMenuSala == '5':
-            excluir_sala(salas)
+            excluir_sala(salas,sessoes)
             print("\n")
         elif escolhaMenuSala == '6':
             print("saindo do submenu salas...")
@@ -244,11 +249,17 @@ def alterar_sala(salas):
     else:
         print("sala não encontrada.")
 
-def excluir_sala(salas):
+def excluir_sala(salas,sessoes):
     codigo = int(input("Digite o código da sala que deseja excluir: "))
     if codigo in salas:
-        del salas[codigo]
-        print("sala excluída com sucesso.")
+            for sessao in sessoes:
+                if sessao[1] == codigo:
+                    print("não é possivel excluir sala pois a mesma faz parte de uma sessão")
+                    return
+                else:
+                    continue
+            del salas[codigo]
+            print("sala excluída com sucesso.")
     else:
         print("sala não encontrada.")
 
@@ -280,7 +291,7 @@ def submenu_sessoes(sessoes,filmes,salas):
             buscar_sessoes(sessoes,filmes,salas)
             print("\n")
         elif escolhaMenuSessao == '3':
-            incluir_sessoes(sessoes,filmes,salas)
+            incluir_sessoes(filmes,salas,sessoes)
             print("\n")
         elif escolhaMenuSessao == '4':
             alterar_sessoes(filmes,salas,sessoes)
@@ -304,17 +315,16 @@ def exibir_dados_sessao(sessao):
 #region CRUD   
 def incluir_sessoes(filmes,salas,sessoes):
     codSala = int(input("Digite o código da sala: "))
-    while codSala in salas:
-        print("codigo de sala existente, digite novamente")
+    while codSala not in salas:
+        print("codigo de sala inexistente, digite novamente")
         codSala = int(input("Digite o código da sala: "))
     codSalaSimples = codSala
     codFilme = int(input("Digite o codigo do filme: "))
-    while codFilme in filmes:
-        print("codigo de filme existente, digite novamente")
+    while codFilme not in filmes:
+        print("codigo de filme inexistente, digite novamente")
         codFilme = int(input("Digite o código do filme: "))
     codFilmeSimples = codFilme  
-    data = ''
-    horario = ''
+    
     def HoraData():
         Horario = ''
         while not Horario:
@@ -346,21 +356,28 @@ def incluir_sessoes(filmes,salas,sessoes):
                     Data = DataS
                 else:
                     print("formatação invalida, digite novamente")
-        while Horario in sessoes and Data in sessoes:
-            print("já existe um filme nesta data e neste horario, digite novamente")
-            return Data,Horario
-        data,horario = HoraData()
-    while data in sessoes and horario in sessoes and codSalaSimples in sessoes:
+
+        return (Data,Horario)
+    data = ''
+    horario = ''
+    data,horario = HoraData()
+    while (codFilmeSimples,codSalaSimples,data,horario) in sessoes:
         print("data e horario ja ocupados para esta sala! escolha outro horario")
         data,horario = HoraData()
-    return (codFilmeSimples,codSalaSimples,data,horario)
+    precoingresso = -1
+    while precoingresso < 0 or precoingresso > 200:
+        precoingresso = int(input("digite um valor para o ingresso: "))
+    sessoes[(codFilmeSimples,codSalaSimples,data,horario)] = {
+            "Preço do Ingresso": precoingresso
+        }
 
 def excluir_sessoes(filmes,salas,sessoes):
     CodExcluir = busca_sessoes_retorna(filmes,salas)
     if CodExcluir in sessoes:
         del sessoes[CodExcluir]
+        print("sessão excluida com sucesso")
     else:
-        print("nçao foi possivel excluir")
+        print("não foi possivel excluir")
 
 def alterar_sessoes(filmes,salas,sessoes):
     codAlterar = busca_sessoes_retorna(filmes,salas)
@@ -436,8 +453,8 @@ def buscar_sessoes(sessoes,filmes,salas):
     else:
         print("Sala não encontrada.")
 #endregion
-#endregion
 
+#endregion
 
 #region Relatorios
 
@@ -518,10 +535,10 @@ def main():
         opcao = input("Escolha uma opção: ")
 
         if opcao == "1":
-            submenu_salas(salas)
+            submenu_salas(salas,sessoes)
 
         elif opcao == "2":
-            submenu_filmes(filmes)
+            submenu_filmes(filmes,sessoes)
             
 
         elif opcao == "3":
@@ -581,6 +598,5 @@ def adicionar_dados_exemplo():
     }
 
     return salas, filmes, sessoes
-
 
 main()
