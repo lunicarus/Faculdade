@@ -256,8 +256,7 @@ def excluir_sala(salas):
 
 
 #region Sessões
-def incluir_sessoes(sessoes,filmes,salas):
-    codSessao = busca_sessoes_retorna(filmes,salas)
+
 
 def submenu_sessoes(sessoes,filmes,salas):
     escolhaMenuSessao = '0'
@@ -284,10 +283,10 @@ def submenu_sessoes(sessoes,filmes,salas):
             incluir_sessoes(sessoes,filmes,salas)
             print("\n")
         elif escolhaMenuSessao == '4':
-            ##alterar_sala(sessoes)
+            alterar_sessoes(filmes,salas,sessoes)
             print("\n")
         elif escolhaMenuSessao == '5':
-            ##excluir_sala(sessoes)
+            excluir_sessoes(filmes,salas,sessoes)
             print("\n")
         elif escolhaMenuSessao == '6':
             print("saindo do submenu sessoes...")
@@ -302,8 +301,8 @@ def exibir_dados_sessao(sessao):
     print(f"Código da Sala: {sessao[1]}")
     print(f"Data: {sessao[2]}")
     print(f"Horário: {sessao[3]}")
-    
-def busca_sessoes_vazias(filmes,salas,sessoes):
+#region CRUD   
+def incluir_sessoes(filmes,salas,sessoes):
     codSala = int(input("Digite o código da sala: "))
     while codSala in salas:
         print("codigo de sala existente, digite novamente")
@@ -316,7 +315,6 @@ def busca_sessoes_vazias(filmes,salas,sessoes):
     codFilmeSimples = codFilme  
     data = ''
     horario = ''
-    ##while Horario in sessoes and Data in sessoes:
     def HoraData():
         Horario = ''
         while not Horario:
@@ -356,6 +354,33 @@ def busca_sessoes_vazias(filmes,salas,sessoes):
         print("data e horario ja ocupados para esta sala! escolha outro horario")
         data,horario = HoraData()
     return (codFilmeSimples,codSalaSimples,data,horario)
+
+def excluir_sessoes(filmes,salas,sessoes):
+    CodExcluir = busca_sessoes_retorna(filmes,salas)
+    if CodExcluir in sessoes:
+        del sessoes[CodExcluir]
+    else:
+        print("nçao foi possivel excluir")
+
+def alterar_sessoes(filmes,salas,sessoes):
+    codAlterar = busca_sessoes_retorna(filmes,salas)
+    if codAlterar in sessoes:
+        sessao = filmes[codAlterar]
+        exibir_dados_sessao(codAlterar)
+        exibir_dados_sessao_key(sessao)
+        
+
+        preco = input("Digite o novo preço da sessão (ou deixe em branco para manter o mesmo): ")
+        if preco:
+            sessao["Preço do Ingresso"] = int(preco)
+        print("sessão alterada com sucesso.")
+    else:
+        print("Filme não encontrado.")
+
+
+#endregion
+
+#region BuscasSessoes
 def busca_sessoes_retorna(filmes,salas):
     codSala = int(input("Digite o código da sala: "))
     while codSala not in salas:
@@ -410,8 +435,9 @@ def buscar_sessoes(sessoes,filmes,salas):
         exibir_dados_sessao_key(sessoes[codSessao])
     else:
         print("Sala não encontrada.")
-
 #endregion
+#endregion
+
 
 #region Relatorios
 
