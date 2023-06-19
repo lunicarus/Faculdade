@@ -460,15 +460,15 @@ def buscar_sessoes(sessoes,filmes,salas):
 
 def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
         
-    if relatorio_opcao == "1":
-            tipo_exibicao = input("Digite o tipo de exibição (X): ")
-            capacidade = int(input("Digite a capacidade mínima (Y): "))
+    if relatorio_opcao == 1:
+            tipo_exibicao = input("Digite o tipo de exibição (3D/2D): ")
+            capacidade = int(input("Digite a capacidade mínima (1~200): "))
             relatorio_salas_tipo_capacidade(salas, tipo_exibicao, capacidade)
-    elif relatorio_opcao == "2":
+    elif relatorio_opcao == 2:
             ano = int(input("Digite o ano mínimo (X): "))
             relatorio_filmes_lancados(filmes, ano)
 
-    elif relatorio_opcao == "3":
+    elif relatorio_opcao == 3:
             data_inicial = input("Digite a data inicial (formato: DD/MM/AAAA): ")
             data_final = input("Digite a data final (formato: DD/MM/AAAA): ")
             relatorio_sessoes_data(sessoes, data_inicial, data_final)
@@ -478,17 +478,21 @@ def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
 
 
 def submenu_relatorios(salas,filmes,sessoes):
-    print("Submenu de Relatórios:")
-    print("1. Mostrar todas as salas com tipo de exibição X e capacidade maior que Y")
-    print("2. Mostrar todos os filmes lançados a partir do ano X")
-    print("3. Mostrar todas as sessões exibidas entre as datas X e Y")
-    relatorio_opcao = input("Escolha: ")
-    relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes)
+    relatorio_opcao = 0
+    while relatorio_opcao != 4:
+
+        print("Submenu de Relatórios:")
+        print("1. Mostrar todas as salas com tipo de exibição X e capacidade maior que Y")
+        print("2. Mostrar todos os filmes lançados a partir do ano X")
+        print("3. Mostrar todas as sessões exibidas entre as datas X e Y")
+        print("4. Sair")
+        relatorio_opcao = int(input("Escolha: "))
+        relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes)
 
 def relatorio_salas_tipo_capacidade(salas, tipo_exibicao, capacidade):
     salas_encontradas = []
     for sala in salas.values():
-        if sala["tipo_exibicao"] == tipo_exibicao and sala["capacidade"] > capacidade:
+        if sala["Tipo de Exibição"] == tipo_exibicao and sala["Capacidade"] > capacidade:
             salas_encontradas.append(sala)
     if len(salas_encontradas) == 0:
         print("Nenhuma sala encontrada com os critérios especificados.")
@@ -501,7 +505,7 @@ def relatorio_salas_tipo_capacidade(salas, tipo_exibicao, capacidade):
 def relatorio_filmes_lancados(filmes, ano):
     filmes_encontrados = []
     for filme in filmes.values():
-        if filme["ano_lancamento"] >= ano:
+        if filme["Ano de Lançamento"] >= ano:
             filmes_encontrados.append(filme)
     if len(filmes_encontrados) == 0:
         print("Nenhum filme encontrado com os critérios especificados.")
