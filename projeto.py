@@ -1,3 +1,5 @@
+import re
+
 def exibir_menu():
     print("Menu de Opções:")
     print("1. Submenu de Salas")
@@ -254,22 +256,160 @@ def excluir_sala(salas):
 
 
 #region Sessões
+def incluir_sessoes(sessoes,filmes,salas):
+    codSessao = busca_sessoes_retorna(filmes,salas)
 
-def submenu_sessoes():
+def submenu_sessoes(sessoes,filmes,salas):
+    escolhaMenuSessao = '0'
+    while escolhaMenuSessao != '6':
+        print("Submenu de sessoes:")
+        print("1. Listar todas as sessoes")
+        print("2. Listar uma sessão específico")
+        print("3. Incluir uma sessão")
+        print("4. Alterar uma sessão")
+        print("5. Excluir uma sessão")
+        print("6. Sair")
+        escolhaMenuSessao = input()
+        print("\n")
+        if escolhaMenuSessao == '1':
+            for sessao in sessoes:
+                print("\n")
+                print("-------------------------")
+                exibir_dados_sessao(sessao)
+                exibir_dados_sessao_key(sessoes[sessao])
+        elif escolhaMenuSessao == '2':
+            buscar_sessoes(sessoes,filmes,salas)
+            print("\n")
+        elif escolhaMenuSessao == '3':
+            incluir_sessoes(sessoes,filmes,salas)
+            print("\n")
+        elif escolhaMenuSessao == '4':
+            ##alterar_sala(sessoes)
+            print("\n")
+        elif escolhaMenuSessao == '5':
+            ##excluir_sala(sessoes)
+            print("\n")
+        elif escolhaMenuSessao == '6':
+            print("saindo do submenu sessoes...")
+        else :
+            print("opção invalida!")
+            print("\n") 
 
-    print("Submenu de Sessões:")
-    print("1. Listar todas as sessões")
-    print("2. Listar uma sessão específica")
-    print("3. Incluir uma sessão")
-    print("4. Alterar uma sessão")
-    print("5. Excluir uma sessão")
-
+def exibir_dados_sessao_key(sessaoKey):
+    print(f"Preço do Ingresso: {sessaoKey['Preço do Ingresso']}")
 def exibir_dados_sessao(sessao):
-    print("Código do Filme:", sessao["codigo_filme"])
-    print("Código da Sala:", sessao["codigo_sala"])
-    print("Data:", sessao["data"])
-    print("Horário:", sessao["horario"])
-    print("Preço do Ingresso:", sessao["preco_ingresso"])
+    print(f"Código do Filme: {sessao[0]}")
+    print(f"Código da Sala: {sessao[1]}")
+    print(f"Data: {sessao[2]}")
+    print(f"Horário: {sessao[3]}")
+    
+def busca_sessoes_vazias(filmes,salas,sessoes):
+    codSala = int(input("Digite o código da sala: "))
+    while codSala in salas:
+        print("codigo de sala existente, digite novamente")
+        codSala = int(input("Digite o código da sala: "))
+    codSalaSimples = codSala
+    codFilme = int(input("Digite o codigo do filme: "))
+    while codFilme in filmes:
+        print("codigo de filme existente, digite novamente")
+        codFilme = int(input("Digite o código do filme: "))
+    codFilmeSimples = codFilme  
+    data = ''
+    horario = ''
+    ##while Horario in sessoes and Data in sessoes:
+    def HoraData():
+        Horario = ''
+        while not Horario:
+            horarioS = input("digite o horario no formato HH:MM: ")
+            testeH = (horarioS.split(":"))
+            for elemento in range(len(testeH)):
+                testeH[elemento] = int(testeH[elemento])
+            if testeH[0] < 0 or testeH[0] > 24 or testeH[1] < 0 or testeH[1] > 60:
+                print("valor para horas ou minutos invalido!")
+                continue
+            r = re.compile('.{2}:.{2}')
+            if len(horarioS) == 5:
+                if r.match(horarioS):
+                    Horario = horarioS
+                else:
+                    print("formatação invalida, digite novamente")
+        Data = ''
+        while not Data:       
+            DataS= input("Digite a data no formato DD/MM/AAAA: ")
+            testeD = (DataS.split("/"))
+            for elemento in range(len(testeD)):
+                testeD[elemento] = int(testeD[elemento])
+            if testeD[0] < 0 or testeD[0] > 31 or testeD[1] < 0 or testeD[1] > 12 or testeD[2] < 2023 or testeD[2] > 2027:
+                print("data invalida!")
+                continue;
+            r = re.compile('.{2}/.{2}/.{4}')
+            if len(DataS) == 10:
+                if r.match(DataS):
+                    Data = DataS
+                else:
+                    print("formatação invalida, digite novamente")
+        while Horario in sessoes and Data in sessoes:
+            print("já existe um filme nesta data e neste horario, digite novamente")
+            return Data,Horario
+        data,horario = HoraData()
+    while data in sessoes and horario in sessoes and codSalaSimples in sessoes:
+        print("data e horario ja ocupados para esta sala! escolha outro horario")
+        data,horario = HoraData()
+    return (codFilmeSimples,codSalaSimples,data,horario)
+def busca_sessoes_retorna(filmes,salas):
+    codSala = int(input("Digite o código da sala: "))
+    while codSala not in salas:
+        print("codigo de sala inexistente, digite novamente")
+        codSala = int(input("Digite o código da sala: "))
+    codSalaSimples = codSala
+    codSala = salas[codSala]
+    codFilme = int(input("Digite o codigo do filme: "))
+    while codFilme not in filmes:
+        print("codigo de filme inexistente, digite novamente")
+        codFilme = int(input("Digite o código do filme: "))
+    codFilmeSimples = codFilme
+    codFilme = filmes[codFilme]
+    
+    Horario = ''
+    while not Horario:
+        horarioS = input("digite o horario no formato HH:MM: ")
+        testeH = (horarioS.split(":"))
+        for elemento in range(len(testeH)):
+            testeH[elemento] = int(testeH[elemento])
+        if testeH[0] < 0 or testeH[0] > 24 or testeH[1] < 0 or testeH[1] > 60:
+            print("valor para horas ou minutos invalido!")
+            continue
+        r = re.compile('.{2}:.{2}')
+        if len(horarioS) == 5:
+            if r.match(horarioS):
+                Horario = horarioS
+            else:
+                print("formatação invalida, digite novamente")
+    Data = ''
+    while not Data:       
+        DataS= input("Digite a data no formato DD/MM/AAAA: ")
+        testeD = (DataS.split("/"))
+        for elemento in range(len(testeD)):
+            testeD[elemento] = int(testeD[elemento])
+        if testeD[0] < 0 or testeD[0] > 31 or testeD[1] < 0 or testeD[1] > 12 or testeD[2] < 2023 or testeD[2] > 2027:
+            print("data invalida!")
+            continue;
+        r = re.compile('.{2}/.{2}/.{4}')
+        if len(DataS) == 10:
+            if r.match(DataS):
+                Data = DataS
+            else:
+                print("formatação invalida, digite novamente")
+    return (codFilmeSimples,codSalaSimples,Data,Horario)
+def buscar_sessoes(sessoes,filmes,salas):    
+
+    codSessao = busca_sessoes_retorna(filmes,salas)
+    if codSessao in sessoes:
+        print("-------------------------")
+        exibir_dados_sessao(codSessao)
+        exibir_dados_sessao_key(sessoes[codSessao])
+    else:
+        print("Sala não encontrada.")
 
 #endregion
 
@@ -359,8 +499,7 @@ def main():
             
 
         elif opcao == "3":
-            print("em progresso")
-            #submenu_sessoes(sessoes)
+            submenu_sessoes(sessoes,filmes,salas)
             #não foi implementada ainda
 
         elif opcao == "4":
