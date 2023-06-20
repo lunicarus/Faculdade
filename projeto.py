@@ -1,5 +1,5 @@
 import re
-import datetime
+from datetime import datetime
 
 #region Filmes
 def submenu_filmes(filmes,sessoes):
@@ -504,15 +504,18 @@ def relatorio_filmes_lancados(filmes, ano):
 def relatorio_sessoes_data(sessoes,dataInicio,DataFim):
     
     try:
-        dataInicio = datetime.strptime(dataInicio, "%d/%m/%Y").date()
-        DataFim = datetime.strptime(DataFim, "%d/%m/%Y").date()
+       
+        DataI  = datetime.strptime(dataInicio, "%d/%m/%Y")
+        DataF= datetime.strptime(DataFim, "%d/%m/%Y")
+        
     except ValueError:
         print("Datas inválidas.")
         return
     
     sessoes_encontradas = []
     for sessao, sessao_key in sessoes.items():
-        if dataInicio <= sessao[2] <= DataFim:
+        DataE = datetime.strptime( sessao[2], "%d/%m/%Y")
+        if DataI <= DataE <= DataF:
             sessoes_encontradas.append((sessao, sessao_key))
     
     if len(sessoes_encontradas) > 0:
@@ -594,8 +597,8 @@ def adicionar_dados_exemplo():
 
     sessoes = {
         (1, 101, "11/06/2023", "10:00"): {"Preço do Ingresso": 15.0},
-        (2, 102, "21/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
-        (3, 201, "31/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
+        (2, 102, "20/06/2023", "13:00"): {"Preço do Ingresso": 20.0},
+        (3, 201, "30/06/2023", "16:00"): {"Preço do Ingresso": 18.0},
         (4, 202, "12/06/2023", "10:00"): {"Preço do Ingresso": 16.0},
         (5, 301, "22/06/2023", "13:00"): {"Preço do Ingresso": 22.0},
         (6, 302, "02/06/2023", "16:00"): {"Preço do Ingresso": 17.0},
