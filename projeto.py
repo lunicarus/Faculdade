@@ -1,4 +1,5 @@
 import re
+import datetime
 
 def exibir_menu():
     print("Menu de Opções:")
@@ -465,7 +466,7 @@ def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
             capacidade = int(input("Digite a capacidade mínima (1~200): "))
             relatorio_salas_tipo_capacidade(salas, tipo_exibicao, capacidade)
     elif relatorio_opcao == 2:
-            ano = int(input("Digite o ano mínimo (X): "))
+            ano = int(input("Digite o ano mínimo: "))
             relatorio_filmes_lancados(filmes, ano)
 
     elif relatorio_opcao == 3:
@@ -515,10 +516,38 @@ def relatorio_filmes_lancados(filmes, ano):
             exibir_dados_filme(filme)
             print("")
 
+
+
+def relatorio_sessoes_data(sessoes,dataInicio,DataFim):
+    
+    try:
+        dataInicio = datetime.strptime(dataInicio, "%d/%m/%Y").date()
+        DataFim = datetime.strptime(DataFim, "%d/%m/%Y").date()
+    except ValueError:
+        print("Datas inválidas.")
+        return
+    
+    sessoes_encontradas = []
+    for sessao, sessao_key in sessoes.items():
+        if dataInicio <= sessao[2] <= DataFim:
+            sessoes_encontradas.append((sessao, sessao_key))
+    
+    if len(sessoes_encontradas) > 0:
+        print(f"Sessões encontradas entre {dataInicio} e {DataFim}")
+        for sessao, sessao_key in sessoes_encontradas:
+            print("-------------------------")
+            exibir_dados_sessao(sessao)
+            exibir_dados_sessao_key(sessao_key)
+    else:
+        print(f"Não foram encontradas sessões entre {dataInicio} e {DataFim}")
+
+
+
 def relatorio_sessoes_data(sessoes, data_inicial, data_final):
     sessoes_encontradas = []
-    for sessao in sessoes.values():
-        if data_inicial <= sessao["data"] <= data_final:
+    for sessao in sessoes:
+
+        if data_inicial <= (sessao[2]) <= data_final:
             sessoes_encontradas.append(sessao)
     if len(sessoes_encontradas) == 0:
         print("Nenhuma sessão encontrada com os critérios especificados.")
@@ -547,12 +576,11 @@ def main():
 
         elif opcao == "3":
             submenu_sessoes(sessoes,filmes,salas)
-            #não foi implementada ainda
 
         elif opcao == "4":
             print("em progresso")
-            #submenu_relatorios(salas,filmes,sessoes)
-            #não foi implementada ainda
+            submenu_relatorios(salas,filmes,sessoes)
+ 
 
         elif opcao == "5":
             print("Saindo do programa...")
