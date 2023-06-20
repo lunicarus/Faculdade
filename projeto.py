@@ -1,16 +1,7 @@
 import re
 import datetime
 
-def exibir_menu():
-    print("Menu de Opções:")
-    print("1. Submenu de Salas")
-    print("2. Submenu de Filmes")
-    print("3. Submenu de Sessões")
-    print("4. Submenu Relatórios")
-    print("5. Sair")
-
 #region Filmes
-
 def submenu_filmes(filmes,sessoes):
 
     escolhaMenuFilme = 0
@@ -123,12 +114,9 @@ def excluir_filme(filmes,sessoes):
         print("Filme excluído com sucesso.")
     else:
             print("Filme não encontrado.")
-
 #endregion
 
-
 # region Salas
-
 def submenu_salas(salas,sessoes):
     escolhaMenuSala = '0'
     while escolhaMenuSala != '6':
@@ -265,7 +253,6 @@ def excluir_sala(salas,sessoes):
         print("sala não encontrada.")
 
 #endregion
-
 
 #region Sessões
 
@@ -458,7 +445,6 @@ def buscar_sessoes(sessoes,filmes,salas):
 #endregion
 
 #region Relatorios
-
 def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
         
     if relatorio_opcao == 1:
@@ -476,7 +462,6 @@ def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
 
     else:
         print("Opção inválida.")
-
 
 def submenu_relatorios(salas,filmes,sessoes):
     relatorio_opcao = 0
@@ -516,8 +501,6 @@ def relatorio_filmes_lancados(filmes, ano):
             exibir_dados_filme(filme)
             print("")
 
-
-
 def relatorio_sessoes_data(sessoes,dataInicio,DataFim):
     
     try:
@@ -541,22 +524,15 @@ def relatorio_sessoes_data(sessoes,dataInicio,DataFim):
     else:
         print(f"Não foram encontradas sessões entre {dataInicio} e {DataFim}")
 
-
-
-def relatorio_sessoes_data(sessoes, data_inicial, data_final):
-    sessoes_encontradas = []
-    for sessao in sessoes:
-
-        if data_inicial <= (sessao[2]) <= data_final:
-            sessoes_encontradas.append(sessao)
-    if len(sessoes_encontradas) == 0:
-        print("Nenhuma sessão encontrada com os critérios especificados.")
-    else:
-        print("Sessões encontradas:")
-        for sessao in sessoes_encontradas:
-            exibir_dados_sessao(sessao)
-            print("")
 #endregion
+
+def exibir_menu():
+    print("Menu de Opções:")
+    print("1. Submenu de Salas")
+    print("2. Submenu de Filmes")
+    print("3. Submenu de Sessões")
+    print("4. Submenu Relatórios")
+    print("5. Sair")
 
 def main():
     salas = {}
@@ -630,5 +606,4 @@ def adicionar_dados_exemplo():
     }
 
     return salas, filmes, sessoes
-
 main()
