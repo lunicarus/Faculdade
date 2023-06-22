@@ -28,7 +28,7 @@ def SubmenuFilmes(filmes,sessoes):
             IncluirFilme(filmes)
             print("\n")
         elif escolhaMenuFilme == '4':
-            AlterarFilme(filmes)
+            AlterarFilme(filmes,sessoes)
             print("\n")
         elif escolhaMenuFilme == '5':
             ExcluirFilme(filmes,sessoes)
@@ -74,9 +74,15 @@ def IncluirFilme(filmes):
         }
         print("Filme cadastrado com sucesso.")
 
-def AlterarFilme(filmes):
+def AlterarFilme(filmes,sessoes):
     codigo = int(input("Digite o código do filme que deseja alterar: "))
     if codigo in filmes:
+        for sessao in sessoes:
+            if sessao[0] == codigo:
+                print("não é possivel alterar filme pois o mesmo faz parte de uma sessão")
+                return
+            else:
+                continue
         filme = filmes[codigo]
         ExibirDadosFilme(filme)
 
@@ -143,7 +149,7 @@ def SubmenuSalas(salas,sessoes):
             IncluirSala(salas)
             print("\n")
         elif escolhaMenuSala == '4':
-            AlterarSala(salas)
+            AlterarSala(salas,sessoes)
             print("\n")
         elif escolhaMenuSala == '5':
             ExcluirSala(salas,sessoes)
@@ -205,8 +211,15 @@ def IncluirSala(salas):
         }
         print("sala cadastrada com sucesso.")
 
-def AlterarSala(salas):
+def AlterarSala(salas,sessoes):
     codigo = int(input("Digite o código da sala que deseja alterar: "))
+    if codigo in salas:
+            for sessao in sessoes:
+                if sessao[1] == codigo:
+                    print("não é possivel alterar sala pois a mesma faz parte de uma sessão")
+                    return
+                else:
+                    continue
     if codigo in salas:
         sala = salas[codigo]
         ExibirDadosSala(sala)
