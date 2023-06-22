@@ -550,6 +550,7 @@ def RelatorioSessoesData(sessoes,dataInicio,DataFim):
 
 #endregion
 
+#region Main
 def ExibirMenu():
     print("Menu de Opções:")
     print("1. Submenu de Salas")
@@ -594,7 +595,7 @@ def AdicionarDadosExemplo():
         501: {"Nome": "Sala VIP", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": 'Sim'},
         502: {"Nome": "Sala VVIP", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": 'Sim'}
     }
-    
+
     filmes = {
         1: {"Nome": "Tentando Ensinar: A Saga", "Ano de Lançamento": 2023, "Diretor": "__", "Atores": ["C", "Python","Aluno"]},
         2: {"Nome": "The Infinite Loop", "Ano de Lançamento": 2001, "Diretor": "ari aster", "Atores": ["maicao", "estagiario 015A"]},
@@ -623,3 +624,4 @@ def AdicionarDadosExemplo():
 
     return salas, filmes, sessoes
 main()
+#endregion
