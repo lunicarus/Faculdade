@@ -566,26 +566,18 @@ def main():
     while True:
         ExibirMenu()
         opcao = input("Escolha uma opção: ")
-
         if opcao == "1":
             SubmenuSalas(salas,sessoes)
-
         elif opcao == "2":
             SubmenuFilmes(filmes,sessoes)
-            
-
         elif opcao == "3":
             SubmenuSessoes(sessoes,filmes,salas)
-
         elif opcao == "4":
             print("em progresso")
             SubmenuRelatorios(salas,filmes,sessoes)
- 
-
         elif opcao == "5":
             print("Saindo do programa...")
             break
-
         else:
             print("Opção inválida. Tente novamente.")
 
@@ -602,7 +594,7 @@ def AdicionarDadosExemplo():
         501: {"Nome": "Sala VIP", "Capacidade": 120, "Tipo de Exibição": "2D", "Acessível": 'Sim'},
         502: {"Nome": "Sala VVIP", "Capacidade": 90, "Tipo de Exibição": "3D", "Acessível": 'Sim'}
     }
-
+    
     filmes = {
         1: {"Nome": "Tentando Ensinar: A Saga", "Ano de Lançamento": 2023, "Diretor": "__", "Atores": ["C", "Python","Aluno"]},
         2: {"Nome": "The Infinite Loop", "Ano de Lançamento": 2001, "Diretor": "ari aster", "Atores": ["maicao", "estagiario 015A"]},
