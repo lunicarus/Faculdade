@@ -189,15 +189,15 @@ def IncluirSala(salas):
             print(" valor invalido! ")
             Capacidade = int(input("Digite a capacidade: "))
 
-        TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
+        TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ").upper()
         while TipoExibicao != "2D" and TipoExibicao != "3D":
             print(" valor invalido! ")
-            TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
+            TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ").upper()
 
-        acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ")
+        acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ").upper()
         while acessivel != 'S' and acessivel != 'N':
             print(" valor invalido! ")
-            acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ")
+            acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ").upper()
         if acessivel == 'S':
             acessivel = 'Sim'
         else:
@@ -234,12 +234,12 @@ def AlterarSala(salas,sessoes):
             if capacidade > 0 and capacidade < 1000:
                 sala["Capacidade"] = capacidade 
         
-        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ")
+        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ").upper()
         if TipoExibição:
             if TipoExibição == '2D' or TipoExibição ==  '3D':
                 sala["Tipo de Exibição"] = TipoExibição
 
-        acessivel = input("Digite o novo estado de acessibilidade (ou deixe em branco para manter o mesmo): ")
+        acessivel = input("Digite o novo estado de acessibilidade (ou deixe em branco para manter o mesmo): ").upper()
         if acessivel:
             if acessivel == 'S':
                 acessivel = 'Sim'
@@ -287,7 +287,7 @@ def SubmenuSessoes(sessoes,filmes,salas):
             for sessao in sessoes:
                 print("\n")
                 print("-------------------------")
-                ExibirDadosNaKey(sessao) 
+                ExibirDadosNaKey(sessao, filmes) 
                 precoIngresso(sessoes[sessao])
                 #exibir dados sessão mostra os dados que fazem parte da key
                 #exibir dados sessão key mostra os dados atrelados a key
@@ -311,7 +311,11 @@ def SubmenuSessoes(sessoes,filmes,salas):
 
 def precoIngresso(sessaoKey):
     print(f"Preço do Ingresso: R${sessaoKey['Preço do Ingresso']}")
-def ExibirDadosNaKey(sessao):
+def ExibirDadosNaKey(sessao, filmes):
+    cod=sessao[0]
+    valores=filmes[cod]
+    nome=valores['Nome']
+    print('Nome: ',nome)
     print(f"Código do Filme: {sessao[0]}")
     print(f"Código da Sala: {sessao[1]}")
     print(f"Data: {sessao[2]}")
@@ -385,7 +389,7 @@ def AlterarSessao(filmes,salas,sessoes):
     codAlterar = BuscaSessaoRetornaKey(filmes,salas)
     if codAlterar in sessoes:
         sessao = sessoes[codAlterar]
-        ExibirDadosNaKey(codAlterar)
+        ExibirDadosNaKey(codAlterar, filmes)
         precoIngresso(sessao)
         preco = input("Digite o novo preço da sessão (ou deixe em branco para manter o mesmo): ")
         if preco:
@@ -452,7 +456,7 @@ def BuscaSessaoExibe(sessoes,filmes,salas):
     codSessao = BuscaSessaoRetornaKey(filmes,salas)
     if codSessao in sessoes:
         print("-------------------------")
-        ExibirDadosNaKey(codSessao)
+        ExibirDadosNaKey(codSessao, filmes)
         precoIngresso(sessoes[codSessao])
     else:
         print("Sala não encontrada.")
@@ -464,7 +468,7 @@ def BuscaSessaoExibe(sessoes,filmes,salas):
 def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
         
     if relatorio_opcao == 1:
-            tipo_exibicao = input("Digite o tipo de exibição (3D/2D): ")
+            tipo_exibicao = input("Digite o tipo de exibição (3D/2D): ").upper()
             capacidade = int(input("Digite a capacidade mínima (1~200): "))
             RelatoriosSalasTipoCapacidade(salas, tipo_exibicao, capacidade)
     elif relatorio_opcao == 2:
@@ -474,7 +478,7 @@ def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
     elif relatorio_opcao == 3:
             data_inicial = input("Digite a data inicial (formato: DD/MM/AAAA): ")
             data_final = input("Digite a data final (formato: DD/MM/AAAA): ")
-            RelatorioSessoesData(sessoes, data_inicial, data_final)
+            RelatorioSessoesData(sessoes, filmes,data_inicial, data_final)
 
     else:
         print("Opção inválida.")
@@ -519,7 +523,7 @@ def RelatorioFilmesLancados(filmes, ano):
             ExibirDadosFilme(filme)
             print("")
 
-def RelatorioSessoesData(sessoes,dataInicio,DataFim):
+def RelatorioSessoesData(sessoes,filmes,dataInicio,DataFim):
     try:
         DataI  = datetime.strptime(dataInicio, "%d/%m/%Y")
         DataF= datetime.strptime(DataFim, "%d/%m/%Y")      
@@ -535,7 +539,7 @@ def RelatorioSessoesData(sessoes,dataInicio,DataFim):
         print(f"Sessões encontradas entre {dataInicio} e {DataFim}")
         for sessao, sessao_key in sessoes_encontradas:
             print("-------------------------")
-            ExibirDadosNaKey(sessao)
+            ExibirDadosNaKey(sessao, filmes)
             precoIngresso(sessao_key)
     else:
         print(f"Não foram encontradas sessões entre {dataInicio} e {DataFim}")
@@ -556,8 +560,10 @@ def main():
     filmes = {}
     sessoes = {}
     (salas,filmes,sessoes) = AdicionarDadosExemplo()
-    while True:
-        ExibirMenu()
+    ExibirMenu()
+    opcao="0"
+    while opcao != '5':
+        
         opcao = input("Escolha uma opção: ")
         if opcao == "1":
             SubmenuSalas(salas,sessoes)
