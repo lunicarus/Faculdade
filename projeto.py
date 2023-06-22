@@ -379,7 +379,7 @@ def AlterarSessao(filmes,salas,sessoes):
 
         preco = input("Digite o novo preço da sessão (ou deixe em branco para manter o mesmo): ")
         if preco:
-            sessao["Preço do Ingresso"] = int(preco)
+            sessao["Preço do Ingresso"] = float(preco)
         print("sessão alterada com sucesso.")
     else:
         print("Filme não encontrado.")
