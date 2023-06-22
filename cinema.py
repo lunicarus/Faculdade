@@ -189,10 +189,10 @@ def IncluirSala(salas):
             print(" valor invalido! ")
             Capacidade = int(input("Digite a capacidade: "))
 
-        TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
+        TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ").upper()
         while TipoExibicao != "2D" and TipoExibicao != "3D":
             print(" valor invalido! ")
-            TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ")
+            TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ").upper()
 
         acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ")
         while acessivel != 'S' and acessivel != 'N':
@@ -234,7 +234,7 @@ def AlterarSala(salas,sessoes):
             if capacidade > 0 and capacidade < 1000:
                 sala["Capacidade"] = capacidade 
         
-        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ")
+        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ").upper()
         if TipoExibição:
             if TipoExibição == '2D' or TipoExibição ==  '3D':
                 sala["Tipo de Exibição"] = TipoExibição
@@ -310,8 +310,10 @@ def SubmenuSessoes(sessoes,filmes,salas):
 
 def precoIngresso(sessaoKey):
     print(f"Preço do Ingresso: R${sessaoKey['Preço do Ingresso']}")
+
 def ExibirDadosNaKey(sessao):
     print(f"Código do Filme: {sessao[0]}")
+    ExibirDadosFilme((sessao[0]))
     print(f"Código da Sala: {sessao[1]}")
     print(f"Data: {sessao[2]}")
     print(f"Horário: {sessao[3]}")
@@ -472,7 +474,7 @@ def relatorioOpcoes(relatorio_opcao,salas,filmes,sessoes):
     elif relatorio_opcao == 3:
             data_inicial = input("Digite a data inicial (formato: DD/MM/AAAA): ")
             data_final = input("Digite a data final (formato: DD/MM/AAAA): ")
-            RelatorioSessoesData(sessoes, data_inicial, data_final)
+            RelatorioSessoesData(sessoes,filmes, data_inicial, data_final)
 
     else:
         print("Opção inválida.")
@@ -517,7 +519,7 @@ def RelatorioFilmesLancados(filmes, ano):
             ExibirDadosFilme(filme)
             print("")
 
-def RelatorioSessoesData(sessoes,dataInicio,DataFim):
+def RelatorioSessoesData(sessoes,filmes,dataInicio,DataFim):
     try:
         DataI  = datetime.strptime(dataInicio, "%d/%m/%Y")
         DataF= datetime.strptime(DataFim, "%d/%m/%Y")      
