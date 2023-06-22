@@ -14,7 +14,7 @@ def SubmenuFilmes(filmes,sessoes):
         print("5. Excluir um filme")
         print("6. Sair")
         print("\n")
-        escolhaMenuFilme = input("")
+        escolhaMenuFilme = input("Escolha uma opçao: ")
         if escolhaMenuFilme == '1':
             for filme in filmes:
                 print("\n")
@@ -133,7 +133,7 @@ def SubmenuSalas(salas,sessoes):
         print("4. Alterar uma sala")
         print("5. Excluir uma sala")
         print("6. Sair")
-        escolhaMenuSala = input()
+        escolhaMenuSala = input("Escolha uma opção: ")
         print("\n")
         if escolhaMenuSala == '1':
             for sala in salas: 
@@ -281,7 +281,7 @@ def SubmenuSessoes(sessoes,filmes,salas):
         print("4. Alterar uma sessão")
         print("5. Excluir uma sessão")
         print("6. Sair")
-        escolhaMenuSessao = input()
+        escolhaMenuSessao = input("Escolha uma opção: ")
         print("\n")
         if escolhaMenuSessao == '1':
             for sessao in sessoes:
@@ -326,8 +326,7 @@ def IncluirSessao(filmes,salas,sessoes):
     while codFilme not in filmes:
         print("codigo de filme inexistente, digite novamente")
         codFilme = int(input("Digite o código do filme: "))
-    
-    
+ 
     def HoraData():
         Horario = ''
         while not Horario:
@@ -388,8 +387,6 @@ def AlterarSessao(filmes,salas,sessoes):
         sessao = sessoes[codAlterar]
         ExibirDadosNaKey(codAlterar)
         precoIngresso(sessao)
-        
-
         preco = input("Digite o novo preço da sessão (ou deixe em branco para manter o mesmo): ")
         if preco:
             sessao["Preço do Ingresso"] = float(preco)
@@ -523,22 +520,17 @@ def RelatorioFilmesLancados(filmes, ano):
             print("")
 
 def RelatorioSessoesData(sessoes,dataInicio,DataFim):
-    
     try:
-       
         DataI  = datetime.strptime(dataInicio, "%d/%m/%Y")
-        DataF= datetime.strptime(DataFim, "%d/%m/%Y")
-        
+        DataF= datetime.strptime(DataFim, "%d/%m/%Y")      
     except ValueError:
         print("Datas inválidas.")
         return
-    
     sessoes_encontradas = []
     for sessao, sessao_key in sessoes.items():
         DataE = datetime.strptime( sessao[2], "%d/%m/%Y")
         if DataI <= DataE <= DataF:
             sessoes_encontradas.append((sessao, sessao_key))
-    
     if len(sessoes_encontradas) > 0:
         print(f"Sessões encontradas entre {dataInicio} e {DataFim}")
         for sessao, sessao_key in sessoes_encontradas:
