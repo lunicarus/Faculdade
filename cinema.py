@@ -296,7 +296,6 @@ def ExcluirSala(salas,sessoes):
 
 #region Sessões
 
-
 def SubmenuSessoes(sessoes,filmes,salas):
     escolhaMenuSessao = '0'
     while escolhaMenuSessao != '6':
@@ -356,7 +355,6 @@ def IncluirSessao(filmes,salas,sessoes):
     while codFilme not in filmes:
         print("Código de filme inexistente, digite novamente")
         codFilme = int(input("Digite o código do filme: "))
- 
     def HoraData():
         Horario = ''
         while not Horario:
