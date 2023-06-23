@@ -551,25 +551,28 @@ def RelatorioFilmesLancados(filmes, ano):
             print("")
 
 def RelatorioSessoesData(sessoes,filmes,dataInicio,DataFim):
+
     try:
         DataI  = datetime.strptime(dataInicio, "%d/%m/%Y")
-        DataF= datetime.strptime(DataFim, "%d/%m/%Y")      
+        DataF= datetime.strptime(DataFim, "%d/%m/%Y")  
+        flag = 0    
     except ValueError:
         print("Datas inválidas.")
-        return #nao consegui tirar 
-    sessoes_encontradas = []
-    for sessao, sessao_key in sessoes.items():
-        DataE = datetime.strptime( sessao[2], "%d/%m/%Y")
-        if DataI <= DataE <= DataF:
-            sessoes_encontradas.append((sessao, sessao_key))
-    if len(sessoes_encontradas) > 0:
-        print(f"Sessões encontradas entre {dataInicio} e {DataFim}")
-        for sessao, sessao_key in sessoes_encontradas:
-            print("-------------------------")
-            ExibirDadosNaKey(sessao, filmes)
-            precoIngresso(sessao_key)
-    else:
-        print(f"Não foram encontradas sessões entre {dataInicio} e {DataFim}")
+        flag = 1
+    if flag == 0:
+        sessoes_encontradas = []
+        for sessao, sessao_key in sessoes.items():
+            DataE = datetime.strptime( sessao[2], "%d/%m/%Y")
+            if DataI <= DataE <= DataF:
+                sessoes_encontradas.append((sessao, sessao_key))
+        if len(sessoes_encontradas) > 0:
+            print(f"Sessões encontradas entre {dataInicio} e {DataFim}")
+            for sessao, sessao_key in sessoes_encontradas:
+                print("-------------------------")
+                ExibirDadosNaKey(sessao, filmes)
+                precoIngresso(sessao_key)
+        else:
+            print(f"Não foram encontradas sessões entre {dataInicio} e {DataFim}")
 
 #endregion
 
