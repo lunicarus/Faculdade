@@ -342,7 +342,6 @@ def ExibirDadosNaKey(sessao, filmes):
     nome=valores['Nome']
     print('Nome: ',nome)
     print(f"Código do Filme: {sessao[0]}")
-    ExibirDadosFilme((sessao[0]))
     print(f"Código da Sala: {sessao[1]}")
     print(f"Data: {sessao[2]}")
     print(f"Horário: {sessao[3]}")
