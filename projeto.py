@@ -13,8 +13,8 @@ def SubmenuFilmes(filmes,sessoes):
         print("4. Alterar um filme")
         print("5. Excluir um filme")
         print("6. Sair")
-        print("\n")
         escolhaMenuFilme = input("Escolha uma opçao: ")
+        print()
         if escolhaMenuFilme == '1':
             for filme in filmes:
                 print("\n")
@@ -40,13 +40,17 @@ def SubmenuFilmes(filmes,sessoes):
             print("\n")
         
 def ExibirDadosFilme(filme):
-        print("Nome:", filme["Nome"])
-        print("Ano de Lançamento:", filme["Ano de Lançamento"])
-        print("Diretor:", filme["Diretor"])
-        print("Atores:", ", ".join(filme["Atores"]))
-        print("-------------------------")
+        if filme != False:
+            print("Nome:", filme["Nome"])
+            print("Ano de Lançamento:", filme["Ano de Lançamento"])
+            print("Diretor:", filme["Diretor"])
+            print("Atores:", ", ".join(filme["Atores"]))
+            print("-------------------------")
+        else:
+            print('Não é possível encontrar este filme')
 
 def BuscarFilme(filmes):
+    verificaFilme = True
     codigo = int(input("Digite o código do filme: "))
     if codigo in filmes:
         print("-------------------------")
@@ -55,6 +59,8 @@ def BuscarFilme(filmes):
         return filme
     else:
         print("Filme não encontrado.")
+        verificaFilme = False
+        return verificaFilme
 
 def IncluirFilme(filmes):
     codigo = int(input("Digite o código do filme: "))
@@ -75,49 +81,60 @@ def IncluirFilme(filmes):
         print("Filme cadastrado com sucesso.")
 
 def AlterarFilme(filmes,sessoes):
-    codigo = int(input("Digite o código do filme que deseja alterar: "))
+    sairFuncao = True
+    codigo = int(input("\nDigite o código do filme que deseja alterar: "))
     if codigo in filmes:
         for sessao in sessoes:
             if sessao[0] == codigo:
-                print("não é possivel alterar filme pois o mesmo faz parte de uma sessão")
-                return
+                sairFuncao = False
+                break
             else:
                 continue
-        filme = filmes[codigo]
-        ExibirDadosFilme(filme)
+        
+        if sairFuncao == False:
+            print()
+            print("Não é possivel alterar filme pois o mesmo faz parte de uma sessão")
+        else:
+            filme = filmes[codigo]
+            ExibirDadosFilme(filme)
 
-        nome = input("Digite o novo nome do filme (ou deixe em branco para manter o mesmo): ")
-        if nome:
-            filme["Nome"] = nome
+            nome = input("Digite o novo nome do filme (ou deixe em branco para manter o mesmo): ")
+            print()
+            if nome:
+                filme["Nome"] = nome
 
-        ano = input("Digite o novo ano de lançamento do filme (ou deixe em branco para manter o mesmo): ")
-        if ano:
-            filme["Ano de Lançamento"] = int(ano)
+            ano = input("Digite o novo ano de lançamento do filme (ou deixe em branco para manter o mesmo): ")
+            if ano:
+                filme["Ano de Lançamento"] = int(ano)
 
-        diretor = input("Digite o novo diretor do filme (ou deixe em branco para manter o mesmo): ")
-        if diretor:
-            filme["Diretor"] = diretor
+            diretor = input("Digite o novo diretor do filme (ou deixe em branco para manter o mesmo): ")
+            if diretor:
+                filme["Diretor"] = diretor
 
-        atores = input("Digite os novos atores do filme (separados por vírgula) "
-                       "(ou deixe em branco para manter os mesmos): ").split(",")
-        if atores:
-            filme["Atores"] = atores
+            atores = input("Digite os novos atores do filme (separados por vírgula) "
+                        "(ou deixe em branco para manter os mesmos): ").split(",")
+            if atores:
+                filme["Atores"] = atores
 
-        print("Filme alterado com sucesso.")
+            print("Filme alterado com sucesso.")
     else:
         print("Filme não encontrado.")
 
 def ExcluirFilme(filmes,sessoes):
+    sairFuncao=True
     codigo = int(input("Digite o código do filme que deseja excluir: "))
     if codigo in filmes:
         for sessao in sessoes:
             if sessao[0] == codigo:
-                print("não é possivel excluir filme pois o mesmo faz parte de uma sessão")
-                return
+                sairFuncao=False
+                break
             else:
                 continue
-        del filmes[codigo]
-        print("Filme excluído com sucesso.")
+        if sairFuncao == False:
+            print("\nNão é possivel excluir filme pois o mesmo faz parte de uma sessão")
+        else:
+            del filmes[codigo]
+            print("Filme excluído com sucesso.")
     else:
         print("Filme não encontrado.")
 #endregion
@@ -155,9 +172,10 @@ def SubmenuSalas(salas,sessoes):
             ExcluirSala(salas,sessoes)
             print("\n")
         elif escolhaMenuSala == '6':
-            print("saindo do submenu salas...")
+            print("Saindo do submenu salas...")
+            print()
         else :
-            print("opção invalida!")
+            print("Opção inválida!")
             print("\n")
         
 def ExibirDadosSala(sala):
@@ -186,17 +204,17 @@ def IncluirSala(salas):
 
         Capacidade = int(input("Digite a capacidade: "))
         while Capacidade < 0 or Capacidade > 1000:
-            print(" valor invalido! ")
+            print("Valor inválido!")
             Capacidade = int(input("Digite a capacidade: "))
 
         TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ").upper()
         while TipoExibicao != "2D" and TipoExibicao != "3D":
-            print(" valor invalido! ")
+            print("Valor inválido!")
             TipoExibicao = input("Digite o tipo de Exibição (2D / 3D): ").upper()
 
         acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ").upper()
         while acessivel != 'S' and acessivel != 'N':
-            print(" valor invalido! ")
+            print("Valor inválido!")
             acessivel = input( "digite 'S' para acessivel e 'N' para nao acessivel: ").upper()
         if acessivel == 'S':
             acessivel = 'Sim'
@@ -212,59 +230,67 @@ def IncluirSala(salas):
         print("sala cadastrada com sucesso.")
 
 def AlterarSala(salas,sessoes):
+    sairFuncao = True
     codigo = int(input("Digite o código da sala que deseja alterar: "))
     if codigo in salas:
-            for sessao in sessoes:
-                if sessao[1] == codigo:
-                    print("não é possivel alterar sala pois a mesma faz parte de uma sessão")
-                    return
-                else:
-                    continue
-    if codigo in salas:
-        sala = salas[codigo]
-        ExibirDadosSala(sala)
+        for sessao in sessoes:
+            if sessao[1] == codigo:
+                sairFuncao = False
+                break
+            else:
+                continue
+            
+        if sairFuncao == False:
+            print("Não é possivel alterar sala pois a mesma faz parte de uma sessão")
+        else:
+            sala = salas[codigo]
+            ExibirDadosSala(sala)
 
-        nome = input("Digite o novo nome da sala (ou deixe em branco para manter o mesmo): ")
-        if nome:
-            sala["Nome"] = nome
+            nome = input("Digite o novo nome da sala (ou deixe em branco para manter o mesmo): ")
+            if nome:
+                sala["Nome"] = nome
 
-        capacidade = input("Digite a nova capacidade (ou deixe em branco para manter o mesmo): ")
-        if capacidade:
-            capacidade = int(capacidade)
-            if capacidade > 0 and capacidade < 1000:
-                sala["Capacidade"] = capacidade 
-        
-        TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ").upper()
-        if TipoExibição:
-            if TipoExibição == '2D' or TipoExibição ==  '3D':
-                sala["Tipo de Exibição"] = TipoExibição
+            capacidade = input("Digite a nova capacidade (ou deixe em branco para manter o mesmo): ")
+            if capacidade:
+                capacidade = int(capacidade)
+                if capacidade > 0 and capacidade < 1000:
+                    sala["Capacidade"] = capacidade 
+            
+            TipoExibição = input("Digite o novo tipo de exibição (2D/3D) (ou deixe em branco para manter o mesmo): ").upper()
+            if TipoExibição:
+                if TipoExibição == '2D' or TipoExibição ==  '3D':
+                    sala["Tipo de Exibição"] = TipoExibição
 
-        acessivel = input("Digite o novo estado de acessibilidade (ou deixe em branco para manter o mesmo): ").upper()
-        if acessivel:
-            if acessivel == 'S':
-                acessivel = 'Sim'
-                sala["Capacidade"] = acessivel
-            elif acessivel == 'N':
-                acessivel = 'Não'
-                sala["Capacidade"] = acessivel
+            acessivel = input("Digite o novo estado de acessibilidade (ou deixe em branco para manter o mesmo): ").upper()
+            if acessivel:
+                if acessivel == 'S':
+                    acessivel = 'Sim'
+                    sala["Capacidade"] = acessivel
+                elif acessivel == 'N':
+                    acessivel = 'Não'
+                    sala["Capacidade"] = acessivel
 
-        print("sala alterada com sucesso.")
+            print("Sala alterada com sucesso.")
     else:
-        print("sala não encontrada.")
+        print("Sala não encontrada.")
 
 def ExcluirSala(salas,sessoes):
+    sairFuncao = True
     codigo = int(input("Digite o código da sala que deseja excluir: "))
     if codigo in salas:
             for sessao in sessoes:
                 if sessao[1] == codigo:
-                    print("não é possivel excluir sala pois a mesma faz parte de uma sessão")
-                    return
+                    sairFuncao = False
+                    break
                 else:
                     continue
-            del salas[codigo]
-            print("sala excluída com sucesso.")
+            if sairFuncao == False:
+                print("Não é possivel excluir sala pois a mesma faz parte de uma sessão")
+            else:
+                del salas[codigo]
+                print("Sala excluída com sucesso.") 
     else:
-        print("sala não encontrada.")
+        print("Sala não encontrada.")
 
 #endregion
 
@@ -274,7 +300,7 @@ def ExcluirSala(salas,sessoes):
 def SubmenuSessoes(sessoes,filmes,salas):
     escolhaMenuSessao = '0'
     while escolhaMenuSessao != '6':
-        print("Submenu de sessoes:")
+        print("\nSubmenu de sessoes:")
         print("1. Listar todas as sessoes")
         print("2. Listar uma sessão específico")
         print("3. Incluir uma sessão")
@@ -282,10 +308,10 @@ def SubmenuSessoes(sessoes,filmes,salas):
         print("5. Excluir uma sessão")
         print("6. Sair")
         escolhaMenuSessao = input("Escolha uma opção: ")
-        print("\n")
+        print()
         if escolhaMenuSessao == '1':
             for sessao in sessoes:
-                print("\n")
+                print("")
                 print("-------------------------")
                 ExibirDadosNaKey(sessao, filmes) 
                 precoIngresso(sessoes[sessao])
@@ -293,21 +319,20 @@ def SubmenuSessoes(sessoes,filmes,salas):
                 #exibir dados sessão key mostra os dados atrelados a key
         elif escolhaMenuSessao == '2':
             BuscaSessaoExibe(sessoes,filmes,salas)
-            print("\n")
+            print("")
         elif escolhaMenuSessao == '3':
             IncluirSessao(filmes,salas,sessoes)
-            print("\n")
+            print("")
         elif escolhaMenuSessao == '4':
             AlterarSessao(filmes,salas,sessoes)
-            print("\n")
+            print("")
         elif escolhaMenuSessao == '5':
             ExcluirSessao(filmes,salas,sessoes)
-            print("\n")
+            print("")
         elif escolhaMenuSessao == '6':
-            print("saindo do submenu sessoes...")
+            print("Saindo do submenu sessoes...")
         else :
-            print("opção invalida!")
-            print("\n") 
+            print("Opção invalida!\n")
 
 def precoIngresso(sessaoKey):
     print(f"Preço do Ingresso: R${sessaoKey['Preço do Ingresso']}")
@@ -324,11 +349,12 @@ def ExibirDadosNaKey(sessao, filmes):
 def IncluirSessao(filmes,salas,sessoes):
     codSala = int(input("Digite o código da sala: "))
     while codSala not in salas:
-        print("codigo de sala inexistente, digite novamente")
+        print("Código de sala inexistente, digite novamente")
         codSala = int(input("Digite o código da sala: "))
     codFilme = int(input("Digite o codigo do filme: "))
+    
     while codFilme not in filmes:
-        print("codigo de filme inexistente, digite novamente")
+        print("Código de filme inexistente, digite novamente")
         codFilme = int(input("Digite o código do filme: "))
  
     def HoraData():
@@ -355,7 +381,7 @@ def IncluirSessao(filmes,salas,sessoes):
                 testeD[elemento] = int(testeD[elemento])
             if testeD[0] < 0 or testeD[0] > 31 or testeD[1] < 0 or testeD[1] > 12 or testeD[2] < 2023 or testeD[2] > 2027:
                 print("data invalida!")
-                continue;
+                continue
             r = re.compile('.{2}/.{2}/.{4}')
             if len(DataS) == 10:
                 if r.match(DataS):
@@ -405,34 +431,34 @@ def AlterarSessao(filmes,salas,sessoes):
 def BuscaSessaoRetornaKey(filmes,salas):
     codSala = int(input("Digite o código da sala: "))
     while codSala not in salas:
-        print("codigo de sala inexistente, digite novamente")
+        print("Codigo de sala inexistente, digite novamente")
         codSala = int(input("Digite o código da sala: "))
     codSalaSimples = codSala
     codSala = salas[codSala]
     codFilme = int(input("Digite o codigo do filme: "))
     while codFilme not in filmes:
-        print("codigo de filme inexistente, digite novamente")
+        print("Codigo de filme inexistente, digite novamente")
         codFilme = int(input("Digite o código do filme: "))
     codFilmeSimples = codFilme
     codFilme = filmes[codFilme]
     
     Horario = ''
     while not Horario:
-        horarioS = input("digite o horario no formato HH:MM: ")
+        horarioS = input("Digite o horario no formato HH:MM: ")
         testeH = (horarioS.split(":"))
         for elemento in range(len(testeH)):
             testeH[elemento] = int(testeH[elemento])
         if testeH[0] < 0 or testeH[0] > 24 or testeH[1] < 0 or testeH[1] > 60:
-            print("valor para horas ou minutos invalido!")
+            print("Valor para horas ou minutos invalido!")
             continue
         r = re.compile('.{2}:.{2}')
         if len(horarioS) == 5:
             if r.match(horarioS):
                 Horario = horarioS
             else:
-                print("formatação invalida, digite novamente")
+                print("Formatação invalida, digite novamente")
         else:
-            print("numero de caracteres invalido, digite novamente")
+            print("Numero de caracteres invalido, digite novamente")
     Data = ''
     while not Data:       
         DataS= input("Digite a data no formato DD/MM/AAAA: ")
@@ -440,8 +466,8 @@ def BuscaSessaoRetornaKey(filmes,salas):
         for elemento in range(len(testeD)):
             testeD[elemento] = int(testeD[elemento])
         if testeD[0] < 0 or testeD[0] > 31 or testeD[1] < 0 or testeD[1] > 12 or testeD[2] < 2023 or testeD[2] > 2027:
-            print("data invalida!")
-            continue;
+            print("Data invalida!")
+            continue
         r = re.compile('.{2}/.{2}/.{4}')
         if len(DataS) == 10:
             if r.match(DataS):
@@ -529,7 +555,7 @@ def RelatorioSessoesData(sessoes,filmes,dataInicio,DataFim):
         DataF= datetime.strptime(DataFim, "%d/%m/%Y")      
     except ValueError:
         print("Datas inválidas.")
-        return
+        return #nao consegui tirar 
     sessoes_encontradas = []
     for sessao, sessao_key in sessoes.items():
         DataE = datetime.strptime( sessao[2], "%d/%m/%Y")
@@ -560,15 +586,18 @@ def main():
     filmes = {}
     sessoes = {}
     (salas,filmes,sessoes) = AdicionarDadosExemplo()
-    ExibirMenu()
+    
     opcao="0"
     while opcao != '5':
-        
+        print()
+        ExibirMenu()
         opcao = input("Escolha uma opção: ")
+        print()
         if opcao == "1":
             SubmenuSalas(salas,sessoes)
         elif opcao == "2":
             SubmenuFilmes(filmes,sessoes)
+            
         elif opcao == "3":
             SubmenuSessoes(sessoes,filmes,salas)
         elif opcao == "4":
